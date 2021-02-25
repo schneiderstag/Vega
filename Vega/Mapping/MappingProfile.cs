@@ -15,6 +15,7 @@ namespace Vega.Mapping
             // Unidirectional Mappings (Left -> Right)
             CreateMap<Make, MakeResource>();
             CreateMap<Model, ModelResource>();
+            CreateMap<Feature, FeatureResource>();
         }
     }
 }

@@ -14,6 +14,6 @@ export class MakeService {
     // Some of its methods allow passing a generic type argument in order to duck - type the result.
     // Thats why there is no json() method anymore.
     //return this.http.get('api/makes').pipe(map(res => res.json()));
-    return this.http.get('api/makes');
+    return this.http.get('/api/makes');
   }
 }

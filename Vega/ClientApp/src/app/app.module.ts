@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { MakeService } from './services/make.service';
+import { FeatureService } from './services/feature.service';
 
 import { AppComponent } from './components/app/app.component';
 import { CounterComponent } from './components/counter/counter.component';
@@ -12,6 +13,7 @@ import { FetchDataComponent } from './components/fetch-data/fetch-data.component
 import { HomeComponent } from './components/home/home.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,8 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
     ])
   ],
   providers: [
-    MakeService
+    // MakeService,
+    // FeatureService
   ],
   bootstrap: [AppComponent]
 })
