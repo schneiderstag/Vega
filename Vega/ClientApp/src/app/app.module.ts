@@ -4,8 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MakeService } from './services/make.service';
-import { FeatureService } from './services/feature.service';
+import { VehicleService } from './services/vehicle.service';
 
 import { AppComponent } from './components/app/app.component';
 import { CounterComponent } from './components/counter/counter.component';
@@ -35,8 +34,7 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
     ])
   ],
   providers: [
-    // MakeService,
-    // FeatureService
+    // VehicleService,
   ],
   bootstrap: [AppComponent]
 })
