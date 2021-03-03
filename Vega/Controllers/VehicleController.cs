@@ -84,7 +84,7 @@ namespace Vega.Controllers
             return Ok(vehicleResource);
         }
 
-        [HttpGet]// /api/vehicles
+        [HttpGet("/api/vehicles")]
         public async Task<IActionResult> GetVehicles()
         {
             var vehicles = await context.Vehicles.Include(v => v.Features).ToListAsync();
