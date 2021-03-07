@@ -31,9 +31,17 @@ namespace Vega
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            // Configure Interfaces for Dependency Injection:
+            // Transient: A separate instance of repository for every use.
+            // Singleton: A single instance of repository during application lifecycle.
+            // Scoped: A single instance of repository for each request.
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             // Configure DbContext as a service for Dependency Injection:
             // Get the connection string from appsettings.json:
             services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            // or
             // services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
 
             // AutoMapper Configurations
