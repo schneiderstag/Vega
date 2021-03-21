@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../../services/vehicle.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -15,7 +16,7 @@ export class VehicleFormComponent implements OnInit {
     contact: {}
   };
 
-  constructor(private vehicleService: VehicleService) { }
+  constructor(private vehicleService: VehicleService, private notificationService: NotificationService) { }
 
   // ngOnInit(): void {
   //   this.makeService.getMakes().subscribe(makes => {
@@ -50,6 +51,9 @@ export class VehicleFormComponent implements OnInit {
 
   submit() {
     this.vehicleService.create(this.vehicle)
-      .subscribe(x => console.log(x));
+      .subscribe(x => console.log(x),
+        err => {
+          this.notificationService.showToastr('error', 'Error', 'An unexpected error happened.' + err.toString());
+        });
   }
 }
