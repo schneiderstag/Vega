@@ -53,7 +53,7 @@ export class VehicleFormComponent implements OnInit {
     this.vehicleService.create(this.vehicle)
       .subscribe(x => console.log(x),
         err => {
-          this.notificationService.showToastr('error', 'Error', 'An unexpected error happened.' + err.toString());
+          this.notificationService.showToastr('error', 'Error', 'An unexpected error happened.');
         });
   }
 }
