@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
-import { VehicleService } from './services/vehicle.service';
+//import { VehicleService } from './services/vehicle.service';
+//import { NotificationService } from './services/notification.service';
 
 import { AppComponent } from './components/app/app.component';
 import { CounterComponent } from './components/counter/counter.component';
@@ -15,13 +16,16 @@ import { HomeComponent } from './components/home/home.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 
+import { ErrorHandler } from '@angular/core';
+import { AppErrorHandler } from './app.error-handler';
+
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
     CounterComponent,
     FetchDataComponent,
+    HomeComponent,
     VehicleFormComponent
   ],
   imports: [
@@ -29,16 +33,24 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      }),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'vehicles/new', component: VehicleFormComponent },
+      { path: 'home', component: HomeComponent},
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: '**', redirectTo: 'home' }
     ])
   ],
   providers: [
-    // VehicleService,
+    { provide: ErrorHandler, useClass: AppErrorHandler }
+    //VehicleService,
+    //NotificationService
   ],
   bootstrap: [AppComponent]
 })
