@@ -36,7 +36,7 @@ import { AppErrorHandler } from './app.error-handler';
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
+      //preventDuplicates: true,
       }),
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },

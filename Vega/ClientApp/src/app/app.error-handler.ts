@@ -1,4 +1,4 @@
-import { ErrorHandler, Inject, Injector, Injectable } from "@angular/core";
+import { ErrorHandler, Inject, Injector, Injectable, NgZone } from "@angular/core";
 import { NotificationService } from "./services/notification.service";
 
 @Injectable({
@@ -7,14 +7,16 @@ import { NotificationService } from "./services/notification.service";
 export class AppErrorHandler implements ErrorHandler {
 
   //constructor(@Inject(NotificationService) private notificationService: NotificationService) { }
-  constructor(@Inject(Injector) private injector: Injector) { }
+  constructor(private ngZone: NgZone, @Inject(Injector) private injector: Injector) { }
 
   private get notificationService(): NotificationService {
     return this.injector.get(NotificationService);
   }
 
   handleError(error: any): void {
-    console.log("Error!");
-    this.notificationService.showToastr('error', 'Error', 'An unexpected error happened.');
+    this.ngZone.run(() => { // Runs the toastr notification inside js zone to avoid delays when showing the messages.
+      console.log("Error!");
+      this.notificationService.showToastr('error', 'Error', 'An unexpected error happened.');
+    });
   }
 }
