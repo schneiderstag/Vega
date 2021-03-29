@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VehicleService } from '../../services/vehicle.service';
 //import { NotificationService } from '../../services/notification.service';
 
@@ -16,7 +17,15 @@ export class VehicleFormComponent implements OnInit {
     contact: {}
   };
 
-  constructor(private vehicleService: VehicleService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private vehicleService: VehicleService) {
+
+    route.params.subscribe(p => {
+      this.vehicle.id = +p['id']; // + to convert to a number.
+    });
+  }
 
   // ngOnInit(): void {
   //   this.makeService.getMakes().subscribe(makes => {
@@ -25,6 +34,14 @@ export class VehicleFormComponent implements OnInit {
   //   });
   // }
   ngOnInit(): void {
+    this.vehicleService.getVehicle(this.vehicle.id)
+      .subscribe(v => {
+        this.vehicle = v;
+      }, err => {
+        if (err.status == 404)
+          this.router.navigate(['/home']);
+      });
+
     this.vehicleService.getMakes().subscribe(makes => 
       this.makes = makes);
 
