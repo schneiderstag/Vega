@@ -36,10 +36,10 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\app.error-handler.ts" />
+    <None Remove="ClientApp\src\app\models\vehicle.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\models\" />
     <Folder Include="ClientApp\src\app\services\" />
   </ItemGroup>
 
