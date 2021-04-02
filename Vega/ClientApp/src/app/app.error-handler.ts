@@ -13,10 +13,10 @@ export class AppErrorHandler implements ErrorHandler {
     return this.injector.get(NotificationService);
   }
 
-  handleError(error: any): void {
+  handleError(error: Error): void {
     this.ngZone.run(() => { // Runs the toastr notification inside js zone to avoid delays when showing the messages.
-      console.log("Error!");
-      this.notificationService.showToastr('error', 'Error', 'An unexpected error happened.');
+      console.log("Error: " + error.name + " " + error.message + " " + error.stack);
+      this.notificationService.showToastr('error', 'Error', 'An unexpected error happened:</br>' + error.name + '</br>' + error.message + '</br>' + error.stack);
     });
   }
 }
