@@ -32,7 +32,7 @@ export class VehicleFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private vehicleService: VehicleService,
-    private notificationService: NotificationService  ) {
+    private notificationService: NotificationService) {
 
     route.params.subscribe(p => {
       this.vehicle.id = +p['id']; // + to convert to a number.
@@ -55,13 +55,15 @@ export class VehicleFormComponent implements OnInit {
       sources.push(this.vehicleService.getVehicle(this.vehicle.id));
 
     // Send multiple parallel requests
-    forkJoin(sources).subscribe(data => {
+    forkJoin(sources).subscribe((data: any) => {
       this.makes = data[0];
       this.features = data[1];
 
       if (this.vehicle.id) {
         this.setVehicle(data[2]);
         this.populateModels();
+      } else {
+        this.vehicle.id = 0;
       }
     }, err => {
       if (err.status == 404)
@@ -71,6 +73,7 @@ export class VehicleFormComponent implements OnInit {
 
   private setVehicle(vehicle: Vehicle) {
     this.vehicle.id = vehicle.id;
+    //this.vehicle.id = this.vehicle.id ? this.vehicle.id : 0; //fix error with id = NaN. Find a better solution.
     this.vehicle.makeId = vehicle.make.id;
     this.vehicle.modelId = vehicle.model.id;
     this.vehicle.isRegistered = vehicle.isRegistered;
@@ -106,8 +109,12 @@ export class VehicleFormComponent implements OnInit {
           this.notificationService.showToastr("success", "Success", "Vehicle was successfully updated");
         });
     } else {
+      //this.vehicle.id = this.vehicle.id ? this.vehicle.id : 0; //fix error with id = NaN. Find a better solution.
       this.vehicleService.create(this.vehicle)
-        .subscribe(x => console.log(x));
+        .subscribe(x => {
+          this.notificationService.showToastr("success", "Success", "Vehicle was successfully created");
+          console.log(x)
+        });
     }
   }
 
