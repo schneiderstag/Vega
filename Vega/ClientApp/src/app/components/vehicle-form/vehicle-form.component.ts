@@ -1,7 +1,7 @@
 import * as _ from 'underscore';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { SaveVehicle, Vehicle } from '../../models/vehicle';
 import { VehicleService } from '../../services/vehicle.service';
 import { NotificationService } from '../../services/notification.service';

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { SaveVehicle } from '../models/vehicle';
 
 @Injectable({
@@ -32,6 +31,10 @@ export class VehicleService {
 
   getVehicle(id) {
     return this.http.get('/api/vehicles/' + id);
+  }
+
+  getVehicles() {
+    return this.http.get('/api/vehicles/');
   }
 
   delete(id) {

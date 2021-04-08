@@ -10,23 +10,22 @@ import { ToastrModule } from 'ngx-toastr';
 //import { NotificationService } from './services/notification.service';
 
 import { AppComponent } from './components/app/app.component';
-import { CounterComponent } from './components/counter/counter.component';
-import { FetchDataComponent } from './components/fetch-data/fetch-data.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
+import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 
 import { ErrorHandler } from '@angular/core';
 import { AppErrorHandler } from './app.error-handler';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    CounterComponent,
-    FetchDataComponent,
     HomeComponent,
-    VehicleFormComponent
+    VehicleFormComponent,
+    VehicleListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,12 +38,11 @@ import { AppErrorHandler } from './app.error-handler';
       //preventDuplicates: true,
       }),
     RouterModule.forRoot([
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: VehicleFormComponent },
+      { path: 'vehicles', component: VehicleListComponent },
       { path: 'home', component: HomeComponent},
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
       { path: '**', redirectTo: 'home' }
     ])
   ],
