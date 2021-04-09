@@ -9,7 +9,7 @@ import { VehicleService } from '../../services/vehicle.service';
 })
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
-  allVehicles: Vehicle[];
+  //allVehicles: Vehicle[];
   makes: KeyValuePair[];
   filter: any = {};
 
@@ -19,19 +19,27 @@ export class VehicleListComponent implements OnInit {
     this.vehicleService.getMakes()
       .subscribe((makes: KeyValuePair[]) => this.makes = makes); // (makes: KeyValuePair[]) converts from Object to KeyValuePair
 
-    this.vehicleService.getVehicles()
-      .subscribe((vehicles: Vehicle[]) => this.vehicles = this.allVehicles = vehicles);
+    //this.vehicleService.getVehicles(this.filter)
+    //  .subscribe((vehicles: Vehicle[]) => this.vehicles = this.allVehicles = vehicles);
+
+    this.populateVehicles();
+  }
+
+  populateVehicles() {
+    this.vehicleService.getVehicles(this.filter)
+      .subscribe((vehicles: Vehicle[]) => this.vehicles = vehicles);
   }
 
   onFilterChange() {
-    var vehicles = this.allVehicles;
+    this.populateVehicles();
+    //var vehicles = this.allVehicles;
 
-    if (this.filter.makeId)
-      vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
+    //if (this.filter.makeId)
+    //  vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
 
-    if (this.filter.modelId)
-      vehicles = vehicles.filter(v => v.model.id == this.filter.modelId);
+    //if (this.filter.modelId)
+    //  vehicles = vehicles.filter(v => v.model.id == this.filter.modelId);
 
-    this.vehicles = vehicles;
+    //this.vehicles = vehicles;
   }
 }
