@@ -10,11 +10,15 @@ export class VehicleService {
   constructor(private http: HttpClient) { }
 
   // By default the HttpClient deserializes the content of a response into an object.
-    // Some of its methods allow passing a generic type argument in order to duck - type the result.
-    // Thats why there is no json() method anymore.
-    //return this.http.get('api/makes').pipe(map(res => res.json()));
+  // Some of its methods allow passing a generic type argument in order to duck - type the result.
+  // Thats why there is no json() method anymore.
+  // return this.http.get('api/makes').pipe(map(res => res.json()));
   getMakes() {
     return this.http.get('/api/makes');
+  }
+
+  getModels() {
+    return this.http.get('/api/models');
   }
 
   getFeatures() {

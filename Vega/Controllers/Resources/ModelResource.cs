@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace Vega.Controllers.Resources
 {
-    public class FilterResource
+    public class ModelResource : KeyValuePairResource
     {
-        public int? MakeId { get; set; }
-        public int? ModelId { get; set; }
+        public KeyValuePairResource Make { get; set; }
     }
 }
