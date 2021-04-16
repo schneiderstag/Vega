@@ -12,7 +12,7 @@ export class VehicleListComponent implements OnInit {
   //allVehicles: Vehicle[];
   makes: KeyValuePair[];
   models: KeyValuePair[];
-  filter: any = {};
+  query: any = {};
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -23,19 +23,19 @@ export class VehicleListComponent implements OnInit {
     this.vehicleService.getModels()
       .subscribe((models: KeyValuePair[]) => this.models = models);
 
-    //this.vehicleService.getVehicles(this.filter)
+    //this.vehicleService.getVehicles(this.query)
     //  .subscribe((vehicles: Vehicle[]) => this.vehicles = this.allVehicles = vehicles);
 
     this.populateVehicles();
   }
 
   populateVehicles() {
-    this.vehicleService.getVehicles(this.filter)
+    this.vehicleService.getVehicles(this.query)
       .subscribe((vehicles: Vehicle[]) => this.vehicles = vehicles);
   }
 
   //populateVehicles() {
-  //  this.vehicleService.getVehicles(this.filter)
+  //  this.vehicleService.getVehicles(this.query)
   //    .subscribe((vehicles: Vehicle[]) => {
   //      this.vehicles = vehicles;
   //      this.models = vehicles.map(v => v.model); // maps all models in the vehicle list to a new list of models.
@@ -46,12 +46,22 @@ export class VehicleListComponent implements OnInit {
     this.populateVehicles();
     //var vehicles = this.allVehicles;
 
-    //if (this.filter.makeId)
-    //  vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
+    //if (this.query.makeId)
+    //  vehicles = vehicles.query(v => v.make.id == this.query.makeId);
 
-    //if (this.filter.modelId)
-    //  vehicles = vehicles.filter(v => v.model.id == this.filter.modelId);
+    //if (this.query.modelId)
+    //  vehicles = vehicles.query(v => v.model.id == this.query.modelId);
 
     //this.vehicles = vehicles;
+  }
+
+  sortBy(columnName) {
+    if (this.query.sortBy === columnName) {
+      this.query.isSortAscending = false;
+    } else {
+      this.query.sortBy = columnName;
+      this.query.isSortAscending = true;
+    }
+    this.populateVehicles();
   }
 }

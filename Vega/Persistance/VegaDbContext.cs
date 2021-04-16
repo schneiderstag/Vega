@@ -5,7 +5,7 @@ namespace Vega.Persistance
 {
     public class VegaDbContext : DbContext
     {
-        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<T> Vehicles { get; set; }
         public DbSet<Make> Makes { get; set; }
         public DbSet<Model> Models { get; set; }
         public DbSet<Feature> Features { get; set; }

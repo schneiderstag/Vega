@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Vega.Core;
 using Vega.Core.Models;
+using Vega.Extensions;
 
 namespace Vega.Persistance
 {
@@ -18,7 +19,7 @@ namespace Vega.Persistance
             this.context = context;
         }
 
-        public async Task<Vehicle> GetVehicle(int id, bool includeRelated = true)
+        public async Task<T> GetVehicle(int id, bool includeRelated = true)
         {
             if (!includeRelated)
                 return await context.Vehicles.FindAsync(id);
@@ -31,17 +32,17 @@ namespace Vega.Persistance
                 .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public void Add(Vehicle vehicle)
+        public void Add(T vehicle)
         {
             context.Vehicles.Add(vehicle);
         }
 
-        public void Remove(Vehicle vehicle)
+        public void Remove(T vehicle)
         {
             context.Remove(vehicle);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetVehicles(VehicleQuery queryObject) 
+        public async Task<IEnumerable<T>> GetVehicles(VehicleQuery queryObject) 
         {
             var query = context.Vehicles
                 .Include(v => v.Model)
@@ -55,29 +56,16 @@ namespace Vega.Persistance
             if (queryObject.ModelId.HasValue)
                 query = query.Where(v => v.ModelId == queryObject.ModelId.Value);
 
-            //Expression tree to map the sorting columns to the linq expressions
-            var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>() //object because we can then reference any property of the vehicle and not only string properties.
+            //Expression tree (dictionary) to map the sorting columns to the linq expressions
+            var columnsMap = new Dictionary<string, Expression<Func<T, object>>>() // object because we can then reference any property of the vehicle and not only string properties.
             {
                 ["make"] = v => v.Model.Make.Name,
                 ["model"] = v => v.Model.Name,
                 ["contactName"] = v => v.ContactName,
-                ["id"] = v => v.Id
+                //["id"] = v => v.Id
             };
 
-            if (queryObject.IsSortAscending)
-                query = query.OrderBy(columnsMap[queryObject.SortBy]);
-            else
-                query = query.OrderByDescending(columnsMap[queryObject.SortBy]);
-
-            //Code above translates into this:
-            //if (queryObject.SortBy == "make")
-            //    query = (queryObject.IsSortAscending) ? query.OrderBy(v => v.Model.Make.Name) : query.OrderByDescending(v => v.Model.Make.Name);
-            //if (queryObject.SortBy == "model")
-            //    query = (queryObject.IsSortAscending) ? query.OrderBy(v => v.Model.Name) : query.OrderByDescending(v => v.Model.Name);
-            //if (queryObject.SortBy == "contactName")
-            //    query = (queryObject.IsSortAscending) ? query.OrderBy(v => v.ContactName) : query.OrderByDescending(v => v.ContactName);
-            //if (queryObject.SortBy == "id")
-            //    query = (queryObject.IsSortAscending) ? query.OrderBy(v => v.Id) : query.OrderByDescending(v => v.Id);
+            query = query.ApplyOrdering(queryObject, columnsMap);
 
             return await query.ToListAsync();
         }
