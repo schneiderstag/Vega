@@ -45,7 +45,7 @@ export class VehicleService {
     return this.http.delete(this.vehiclesEndpoint + '/' + id);
   }
 
-  toQueryString(obj) {
+  private toQueryString(obj) {
     var parts = [];
 
     for (var property in obj) {

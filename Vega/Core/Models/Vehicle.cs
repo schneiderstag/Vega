@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Vega.Core.Models
 {
     [Table("Vehicles")]
-    public class T
+    public class Vehicle
     {
         public int Id { get; set; }
         public int ModelId { get; set; }
@@ -24,7 +24,7 @@ namespace Vega.Core.Models
         public DateTime LastUpdate { get; set; }
         public ICollection<VehicleFeature> Features { get; set; }
 
-        public T()
+        public Vehicle()
         {
             Features = new Collection<VehicleFeature>();
         }

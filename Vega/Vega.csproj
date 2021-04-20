@@ -40,6 +40,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\components\shared\pagination.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\src\app\services\" />
   </ItemGroup>
 

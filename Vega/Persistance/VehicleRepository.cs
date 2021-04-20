@@ -19,7 +19,7 @@ namespace Vega.Persistance
             this.context = context;
         }
 
-        public async Task<T> GetVehicle(int id, bool includeRelated = true)
+        public async Task<Vehicle> GetVehicle(int id, bool includeRelated = true)
         {
             if (!includeRelated)
                 return await context.Vehicles.FindAsync(id);
@@ -32,18 +32,19 @@ namespace Vega.Persistance
                 .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public void Add(T vehicle)
+        public void Add(Vehicle vehicle)
         {
             context.Vehicles.Add(vehicle);
         }
 
-        public void Remove(T vehicle)
+        public void Remove(Vehicle vehicle)
         {
             context.Remove(vehicle);
         }
 
-        public async Task<IEnumerable<T>> GetVehicles(VehicleQuery queryObject) 
+        public async Task<QueryResult<Vehicle>> GetVehicles(VehicleQuery queryObject) 
         {
+            var result = new QueryResult<Vehicle>();
             var query = context.Vehicles
                 .Include(v => v.Model)
                     .ThenInclude(m => m.Make)
@@ -57,7 +58,7 @@ namespace Vega.Persistance
                 query = query.Where(v => v.ModelId == queryObject.ModelId.Value);
 
             //Expression tree (dictionary) to map the sorting columns to the linq expressions
-            var columnsMap = new Dictionary<string, Expression<Func<T, object>>>() // object because we can then reference any property of the vehicle and not only string properties.
+            var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>() // object because we can then reference any property of the vehicle and not only string properties.
             {
                 ["make"] = v => v.Model.Make.Name,
                 ["model"] = v => v.Model.Name,
@@ -67,7 +68,13 @@ namespace Vega.Persistance
 
             query = query.ApplyOrdering(queryObject, columnsMap);
 
-            return await query.ToListAsync();
+            result.TotalItems = await query.CountAsync();
+
+            query = query.ApplyPaging(queryObject);
+
+            result.Items = await query.ToListAsync();
+
+            return result;
         }
     }
 }

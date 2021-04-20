@@ -11,6 +11,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
+import { PaginationComponent } from './components/shared/pagination.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
@@ -18,12 +19,12 @@ import { VehicleListComponent } from './components/vehicle-list/vehicle-list.com
 import { ErrorHandler } from '@angular/core';
 import { AppErrorHandler } from './app.error-handler';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
+    PaginationComponent,
     VehicleFormComponent,
     VehicleListComponent
   ],
