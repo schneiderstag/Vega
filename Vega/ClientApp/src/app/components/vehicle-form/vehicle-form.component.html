@@ -1,4 +1,4 @@
-<h1>{{ vehicle.id ? "Edit " : "New " }}Vehicle</h1>
+<h1>{{ vehicle.id ? "Edit" : "New" }} Vehicle</h1>
 <p> {{ vehicle | json }}</p>
 <form #f="ngForm" (ngSubmit)="submit()" novalidate>
   <div class="form-group">
