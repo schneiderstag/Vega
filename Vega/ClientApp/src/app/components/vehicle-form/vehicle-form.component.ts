@@ -7,7 +7,7 @@ import { VehicleService } from '../../services/vehicle.service';
 import { NotificationService } from '../../services/notification.service';
 
 @Component({
-  selector: 'app-vehicle-form',
+  selector: 'vehicle-form',
   templateUrl: './vehicle-form.component.html',
   styleUrls: ['./vehicle-form.component.css']
 })
@@ -35,7 +35,7 @@ export class VehicleFormComponent implements OnInit {
     private notificationService: NotificationService) {
 
     route.params.subscribe(p => {
-      this.vehicle.id = +p['id']; // + to convert to a number.
+      this.vehicle.id = +p['id'] || 0; // + to convert to a number.
     });
   }
 

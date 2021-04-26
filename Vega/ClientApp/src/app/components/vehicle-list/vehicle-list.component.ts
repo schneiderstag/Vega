@@ -3,7 +3,7 @@ import { KeyValuePair, Vehicle } from '../../models/vehicle';
 import { VehicleService } from '../../services/vehicle.service';
 
 @Component({
-  selector: 'app-vehicle-list',
+  selector: 'vehicle-list',
   templateUrl: './vehicle-list.component.html',
   styleUrls: ['./vehicle-list.component.css']
 })
