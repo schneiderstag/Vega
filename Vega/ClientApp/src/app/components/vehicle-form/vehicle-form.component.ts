@@ -103,19 +103,12 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    if (this.vehicle.id) {
-      this.vehicleService.update(this.vehicle)
-        .subscribe(x => {
-          this.notificationService.showToastr("success", "Success", "Vehicle was successfully updated");
-        });
-    } else {
-      //this.vehicle.id = this.vehicle.id ? this.vehicle.id : 0; //fix error with id = NaN. Find a better solution.
-      this.vehicleService.create(this.vehicle)
-        .subscribe(x => {
-          this.notificationService.showToastr("success", "Success", "Vehicle was successfully created");
-          console.log(x)
-        });
-    }
+    var result$ = (this.vehicle.id) ? this.vehicleService.update(this.vehicle) : this.vehicleService.create(this.vehicle);
+    result$.subscribe(vehicle => {
+      this.notificationService.showToastr("success", "Success", "Vehicle was successfully saved.");
+      console.log(vehicle);
+      this.router.navigate(['/vehicles/', vehicle.id]);
+    });
   }
 
   delete() {
