@@ -14,6 +14,7 @@ namespace Vega.Mapping
             //Domain to API Resource
             CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             //CreateMap<VehicleQuery, VehicleQueryResource>();
+            CreateMap<Photo, PhotoResource>();
             CreateMap<Make, MakeResource>();
             CreateMap<Model, ModelResource>();
             CreateMap<Make, KeyValuePairResource>();
