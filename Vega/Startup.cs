@@ -9,6 +9,7 @@ using Vega.Persistance;
 using AutoMapper;
 using Vega.Mapping;
 using Vega.Core;
+using Vega.Core.Models;
 
 namespace Vega
 {
@@ -30,6 +31,9 @@ namespace Vega
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            // Get the Photo configuration from appsettings.json. No need for recompile doing this.
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
 
             // Configure Interfaces for Dependency Injection:
             // Transient: A separate instance of repository for every use.
