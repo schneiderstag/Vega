@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { VehicleService } from '../../services/vehicle.service';
+import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'view-vehicle',
@@ -9,6 +10,7 @@ import { VehicleService } from '../../services/vehicle.service';
   styleUrls: ['./view-vehicle.component.css']
 })
 export class ViewVehicleComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef;
   vehicle: any;
   vehicleId: number;
 
@@ -16,6 +18,7 @@ export class ViewVehicleComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
+    private photoService: PhotoService,
     private vehicleService: VehicleService) {
 
     route.params.subscribe(p => {
@@ -46,5 +49,12 @@ export class ViewVehicleComponent implements OnInit {
           this.router.navigate(['/vehicles']);
         });
     }
+  }
+
+  uploadPhoto() {
+    var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
+
+    this.photoService.upload(this.vehicleId, nativeElement.files[0])
+      .subscribe(x => console.log(x));
   }
 }

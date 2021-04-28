@@ -38,14 +38,11 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\app.error-handler.ts" />
     <None Remove="ClientApp\src\app\models\vehicle.ts" />
+    <None Remove="ClientApp\src\app\services\photo.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Remove="ClientApp\src\app\components\shared\pagination.component.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\src\app\services\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -52,8 +52,6 @@ import { AppErrorHandler } from './app.error-handler';
   ],
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler }
-    //VehicleService,
-    //NotificationService
   ],
   bootstrap: [AppComponent]
 })
