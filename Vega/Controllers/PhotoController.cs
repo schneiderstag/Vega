@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Vega.Controllers.Resources;
 using Vega.Core;
@@ -19,6 +19,7 @@ namespace Vega.Controllers
     {
         private readonly IWebHostEnvironment host;
         private readonly IVehicleRepository repository;
+        private readonly IPhotoRepository photoRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly PhotoSettings photoSettings;
@@ -30,6 +31,14 @@ namespace Vega.Controllers
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.photoSettings = options.Value; // Values coming from Statup.cs -> appsettings.json
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<PhotoResource>> GetPhotos(int vehicleId)
+        {
+            var photos = await photoRepository.GetPhotos(vehicleId);
+
+            return mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos);
         }
 
         [HttpPost]
