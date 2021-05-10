@@ -24,10 +24,11 @@ namespace Vega.Controllers
         private readonly IMapper mapper;
         private readonly PhotoSettings photoSettings;
 
-        public PhotoController(IWebHostEnvironment host, IVehicleRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IOptionsSnapshot<PhotoSettings> options)
+        public PhotoController(IWebHostEnvironment host, IVehicleRepository repository, IPhotoRepository photoRepository, IUnitOfWork unitOfWork, IMapper mapper, IOptionsSnapshot<PhotoSettings> options)
         {
             this.host = host;
             this.repository = repository;
+            this.photoRepository = photoRepository;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.photoSettings = options.Value; // Values coming from Statup.cs -> appsettings.json

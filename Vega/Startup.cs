@@ -40,6 +40,7 @@ namespace Vega
             // Singleton: A single instance of repository during application lifecycle.
             // Scoped: A single instance of repository for each request.
             services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Configure DbContext as a service for Dependency Injection:
