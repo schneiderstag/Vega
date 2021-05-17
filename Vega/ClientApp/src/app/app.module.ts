@@ -6,9 +6,6 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
-//import { VehicleService } from './services/vehicle.service';
-//import { NotificationService } from './services/notification.service';
-
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
 import { PaginationComponent } from './components/shared/pagination.component';
