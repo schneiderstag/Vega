@@ -14,14 +14,21 @@ var core_1 = require("@angular/core");
 var Subject_1 = require("rxjs/internal/Subject");
 var ProgressService = /** @class */ (function () {
     function ProgressService() {
-        this.uploadProgress = new Subject_1.Subject();
-        this.downloadProgress = new Subject_1.Subject();
     }
+    ProgressService.prototype.startTracking = function () {
+        this.uploadProgress = new Subject_1.Subject();
+        return this.uploadProgress;
+    };
+    ProgressService.prototype.notify = function (progress) {
+        this.uploadProgress.next(progress);
+    };
+    ProgressService.prototype.endTracking = function () {
+        this.uploadProgress.complete();
+    };
     ProgressService = __decorate([
         core_1.Injectable({
             providedIn: 'root'
-        }),
-        __metadata("design:paramtypes", [])
+        })
     ], ProgressService);
     return ProgressService;
 }());
@@ -29,15 +36,16 @@ exports.ProgressService = ProgressService;
 var BrowserXhrWithProgress = /** @class */ (function () {
     function BrowserXhrWithProgress(progressService) {
         this.progressService = progressService;
+        this.build();
     }
     BrowserXhrWithProgress.prototype.build = function () {
         var _this = this;
         var xhr = new XMLHttpRequest();
-        xhr.onprogress = function (event) {
-            _this.progressService.downloadProgress.next(_this.createProgress(event));
-        };
         xhr.upload.onprogress = function (event) {
-            _this.progressService.uploadProgress.next(_this.createProgress(event));
+            _this.progressService.notify(_this.createProgress(event));
+        };
+        xhr.upload.onloadend = function () {
+            _this.progressService.endTracking(); // Unsubscribe from upload progress to avoid memory leaks
         };
         return xhr;
     };

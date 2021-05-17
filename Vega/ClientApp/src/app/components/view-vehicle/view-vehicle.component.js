@@ -57,18 +57,22 @@ var ViewVehicleComponent = /** @class */ (function () {
     };
     ViewVehicleComponent.prototype.uploadPhoto = function () {
         var _this = this;
-        var nativeElement = this.fileInput.nativeElement;
-        this.progressService.uploadProgress
+        this.progressService.startTracking()
             .subscribe(function (progress) {
             console.log(progress);
             _this.zone.run(function () {
                 _this.progress = progress;
             });
         }, null, function () { _this.progress = null; });
-        this.photoService.upload(this.vehicleId, nativeElement.files[0])
+        var nativeElement = this.fileInput.nativeElement;
+        var file = nativeElement.files[0];
+        nativeElement.value = '';
+        this.photoService.upload(this.vehicleId, file)
             .subscribe(function (photo) {
             _this.photos.push(photo);
             console.log(photo);
+        }, function (err) {
+            _this.notificationService.showToastr("error", "Error", "Photo upload failed: " + err.text());
         });
     };
     __decorate([

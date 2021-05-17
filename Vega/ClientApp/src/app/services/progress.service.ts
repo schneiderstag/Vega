@@ -5,11 +5,20 @@ import { Subject } from 'rxjs/internal/Subject';
   providedIn: 'root'
 })
 export class ProgressService {
-  uploadProgress: Subject<any> = new Subject();
-  downloadProgress: Subject<any> = new Subject();
+  private uploadProgress: Subject<any>;
 
-  constructor() { }
+  startTracking() {
+    this.uploadProgress = new Subject();
+    return this.uploadProgress;
+  }
 
+  notify(progress) {
+    this.uploadProgress.next(progress);
+  }
+
+  endTracking() {
+    this.uploadProgress.complete();
+  }
 }
 
 @Injectable({
@@ -17,18 +26,18 @@ export class ProgressService {
 })
 export class BrowserXhrWithProgress {
 
-  constructor(private progressService: ProgressService) { }
+  constructor(private progressService: ProgressService) { this.build(); }
 
   build(): XMLHttpRequest {
     var xhr = new XMLHttpRequest();
 
-    xhr.onprogress = (event) => {
-      this.progressService.downloadProgress.next(this.createProgress(event));
+    xhr.upload.onprogress = (event) => {
+      this.progressService.notify(this.createProgress(event));
     };
 
-    xhr.upload.onprogress = (event) => {
-      this.progressService.uploadProgress.next(this.createProgress(event));
-    };
+    xhr.upload.onloadend = () => {
+      this.progressService.endTracking(); // Unsubscribe from upload progress to avoid memory leaks
+    }
 
     return xhr;
   }
