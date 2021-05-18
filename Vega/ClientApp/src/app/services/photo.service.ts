@@ -11,7 +11,7 @@ export class PhotoService {
   upload(vehicleId, photo) {
     var formData = new FormData();
     formData.append('file', photo); //photo is coming as file: IFormFile parameter in PhotosController.Upload()
-    return this.http.post(`/api/vehicles/' + ${vehicleId} + '/photos`, formData);
+    return this.http.post(`/api/vehicles/${vehicleId}/photos`, formData);
   }
 
   getPhotos(vehicleId) {
