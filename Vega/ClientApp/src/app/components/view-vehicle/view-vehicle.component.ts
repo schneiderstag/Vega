@@ -37,7 +37,11 @@ export class ViewVehicleComponent implements OnInit {
 
   ngOnInit(): void {
     this.photoService.getPhotos(this.vehicleId)
-      .subscribe(photos => this.photos = photos);
+      //.subscribe(photos => this.photos = photos);
+      .subscribe(photos => {
+        this.photos = photos;
+        console.log(photos);
+      });
 
     this.vehicleService.getVehicle(this.vehicleId)
       .subscribe(
@@ -79,7 +83,7 @@ export class ViewVehicleComponent implements OnInit {
         console.log(photo)
       },
         err => {
-          this.notificationService.showToastr("error", "Error", "Photo upload failed: " + err.text());
+          this.notificationService.showToastr("error", "Error", "Photo upload failed: " + err.error);
         });
   }
 }

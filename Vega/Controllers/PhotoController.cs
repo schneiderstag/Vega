@@ -55,14 +55,18 @@ namespace Vega.Controllers
             if (!photoSettings.isSupported(file.FileName)) return BadRequest("Invalid file type.");
 
             var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads"); // wwwroot folder
+            var uploadsThumbnailFolderPath = Path.Combine(host.WebRootPath, "uploads\\thumbnails"); // wwwroot folder
 
             if (!Directory.Exists(uploadsFolderPath))
                 Directory.CreateDirectory(uploadsFolderPath);
 
+            if (!Directory.Exists(uploadsThumbnailFolderPath))
+                Directory.CreateDirectory(uploadsThumbnailFolderPath);
+
             // Always generate a file name to avoid hackers modifying the file/path name on the fly, accessing directories such as C:/Windows
             var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
             var filePath = Path.Combine(uploadsFolderPath, fileName);
-            var thumbPath = Path.Combine(uploadsFolderPath, fileName, "_thumbnail");
+            var thumbnailPath = Path.Combine(uploadsThumbnailFolderPath, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -70,7 +74,7 @@ namespace Vega.Controllers
             }
 
             // Create thumbnail and save it to the folder.
-            CreateThumbnail(file, thumbPath);
+            CreateThumbnail(file, thumbnailPath);
             
             var photo = new Photo { FileName = fileName };
             vehicle.Photos.Add(photo);
