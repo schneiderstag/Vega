@@ -2,13 +2,15 @@ import { Component, KeyValueDiffers, OnInit } from '@angular/core';
 import { KeyValuePair, Vehicle } from '../../models/vehicle';
 import { VehicleService } from '../../services/vehicle.service';
 
+import { PhotoService } from '../../services/photo.service';
+
 @Component({
   selector: 'vehicle-list',
   templateUrl: './vehicle-list.component.html',
   styleUrls: ['./vehicle-list.component.css']
 })
 export class VehicleListComponent implements OnInit {
-  private readonly PAGE_SIZE = 3;
+  private readonly PAGE_SIZE = 10;
 
   queryResult: any = {};
   //allVehicles: Vehicle[];
@@ -25,7 +27,9 @@ export class VehicleListComponent implements OnInit {
     { }
   ];
 
-  constructor(private vehicleService: VehicleService) { }
+  constructor(private vehicleService: VehicleService,
+              private photoService: PhotoService
+              ) { }
 
   ngOnInit(): void {
     this.vehicleService.getMakes()
@@ -40,9 +44,26 @@ export class VehicleListComponent implements OnInit {
     this.populateVehicles();
   }
 
+  //private populateVehicles() {
+  //  this.vehicleService.getVehicles(this.query)
+  //    .subscribe((result: any) => this.queryResult = result);
+  //}
+
   private populateVehicles() {
     this.vehicleService.getVehicles(this.query)
-      .subscribe((result: any) => this.queryResult = result);
+      .subscribe((result: any) => {
+        this.queryResult = result;
+
+        this.queryResult.items.forEach(item => {
+          this.photoService.getPhotos(item.id)
+            .subscribe((p: any[]) => {
+              //item.photo = p[0].fileName;
+              item.fileName = p.length > 0 ? p[0].fileName : '';
+              console.log(item.fileName);
+              console.log(this.queryResult);
+            });
+        })
+      });
   }
 
   //populateVehicles() {
@@ -52,6 +73,12 @@ export class VehicleListComponent implements OnInit {
   //      this.models = vehicles.map(v => v.model); // maps all models in the vehicle list to a new list of models.
   //    });
   //}
+
+  //getPhotos() {
+  //  for (let v of this.queryResult) {
+  //    this.photoService.getPhotos(v.id)
+  //      .subscribe((photo: any) => v.photo = photo);
+  //  }
 
   onFilterChange() {
     this.query.page = 1;

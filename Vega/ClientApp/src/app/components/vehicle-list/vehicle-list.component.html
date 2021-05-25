@@ -38,14 +38,16 @@
   <tbody>
     <tr *ngFor="let v of queryResult.items">
       <td>{{ v.id }}</td>
+      <td>{{ v.contact.name }}</td>
       <td>{{ v.make.name }}</td>
       <td>{{ v.model.name }}</td>
-      <td>{{ v.contact.name }}</td>
+      <td><img *ngIf="v.fileName!=''" src="/uploads/thumbnails/{{ v.fileName }}" class="img-thumbnail"></td>
       <td>
         <a [routerLink]="['/vehicles/', v.id]">View</a>
       </td>
     </tr>
     <tr>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
