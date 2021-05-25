@@ -24,6 +24,7 @@ export class VehicleListComponent implements OnInit {
     { title: 'Contact Name', key: 'contactName', isSortable: true },
     { title: 'Make', key: 'make', isSortable: true },
     { title: 'Model', key: 'model', isSortable: true },
+    { title: '', key: 'thumbnail', isSortable: false },
     { }
   ];
 
@@ -57,7 +58,6 @@ export class VehicleListComponent implements OnInit {
         this.queryResult.items.forEach(item => {
           this.photoService.getPhotos(item.id)
             .subscribe((p: any[]) => {
-              //item.photo = p[0].fileName;
               item.fileName = p.length > 0 ? p[0].fileName : '';
               console.log(item.fileName);
               console.log(this.queryResult);
