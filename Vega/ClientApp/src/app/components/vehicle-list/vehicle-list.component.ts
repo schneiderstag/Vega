@@ -16,6 +16,7 @@ export class VehicleListComponent implements OnInit {
   //allVehicles: Vehicle[];
   makes: KeyValuePair[];
   models: KeyValuePair[];
+  photos: any[];
   query: any = {
     pageSize: this.PAGE_SIZE
   };
@@ -38,6 +39,9 @@ export class VehicleListComponent implements OnInit {
 
     this.vehicleService.getModels()
       .subscribe((models: KeyValuePair[]) => this.models = models);
+
+    this.photoService.getAllPhotos()
+      .subscribe((photos: any) => this.photos = photos);
 
     //this.vehicleService.getVehicles(this.query)
     //  .subscribe((vehicles: Vehicle[]) => this.vehicles = this.allVehicles = vehicles);

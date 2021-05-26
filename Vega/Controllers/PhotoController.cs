@@ -34,6 +34,14 @@ namespace Vega.Controllers
             this.photoSettings = options.Value; // Values coming from Statup.cs -> appsettings.json
         }
 
+        [HttpGet("/api/photos")]
+        public async Task<IEnumerable<PhotoResource>> GetAllPhotos()
+        {
+            var photos = await photoRepository.GetAllPhotos();
+
+            return mapper.Map<List<Photo>, List<PhotoResource>>(photos);
+        }
+
         [HttpGet]
         public async Task<IEnumerable<PhotoResource>> GetPhotos(int vehicleId)
         {

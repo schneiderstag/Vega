@@ -17,4 +17,8 @@ export class PhotoService {
   getPhotos(vehicleId) {
     return this.http.get(`/api/vehicles/${vehicleId}/photos`);
   }
+
+  getAllPhotos() {
+    return this.http.get('/api/photos');
+  }
 }
