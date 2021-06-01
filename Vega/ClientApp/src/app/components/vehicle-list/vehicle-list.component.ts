@@ -13,7 +13,7 @@ export class VehicleListComponent implements OnInit {
   private readonly PAGE_SIZE = 10;
 
   queryResult: any = {};
-  //allVehicles: Vehicle[];
+  allVehicles: Vehicle[];
   makes: KeyValuePair[];
   models: KeyValuePair[];
   photos: any[];
@@ -25,7 +25,7 @@ export class VehicleListComponent implements OnInit {
     { title: 'Contact Name', key: 'contactName', isSortable: true },
     { title: 'Make', key: 'make', isSortable: true },
     { title: 'Model', key: 'model', isSortable: true },
-    { title: '', key: 'thumbnail', isSortable: false },
+    { title: 'Thumbnail', key: 'thumbnail', isSortable: false },
     { }
   ];
 
@@ -40,8 +40,12 @@ export class VehicleListComponent implements OnInit {
     this.vehicleService.getModels()
       .subscribe((models: KeyValuePair[]) => this.models = models);
 
-    this.photoService.getAllPhotos()
-      .subscribe((photos: any) => this.photos = photos);
+    this.photoService.getPhotos()
+      .subscribe((photos: any[]) => {
+        this.photos = photos;
+        console.log("getPhotos() test");
+        console.log(this.photos);
+      });
 
     //this.vehicleService.getVehicles(this.query)
     //  .subscribe((vehicles: Vehicle[]) => this.vehicles = this.allVehicles = vehicles);
@@ -59,14 +63,41 @@ export class VehicleListComponent implements OnInit {
       .subscribe((result: any) => {
         this.queryResult = result;
 
+        //this.queryResult.items.forEach(item => {
+        //  this.photoService.getVehiclePhotos(item.id)
+        //    .subscribe((p: any[]) => {
+        //      item.fileName = p.length > 0 ? p[0].fileName : '';
+        //      console.log(item.fileName);
+        //      console.log(this.queryResult);
+        //    });
+        //})
+
         this.queryResult.items.forEach(item => {
-          this.photoService.getPhotos(item.id)
-            .subscribe((p: any[]) => {
-              item.fileName = p.length > 0 ? p[0].fileName : '';
-              console.log(item.fileName);
-              console.log(this.queryResult);
-            });
+          for (let photo of this.photos) {
+            if (photo.vehicleId == item.id) {
+              item.fileName = photo.fileName;
+            } else
+              '';
+          }
         })
+
+        console.log(this.queryResult);
+
+        //this.queryResult.items.forEach(item => {
+        //  item.fileName = this.photos.length > 0 ? this.photos.filter(photo => { if (photo.vehicleId == item.id) return photo.fileName }) : '';
+        //})
+
+        //this.queryResult.items.forEach(item => {
+        //  item.fileName = this.photos.length > 0 ? this.photos.forEach(photo =>
+        //  {
+        //    this.photos.filter(photo => {
+        //      if (photo.vehicleId == item.id) return photo.fileName
+        //    })
+        //  }) : '';
+
+          //item.fileName = photos.length > 0 ? photos[0].fileName : '';
+          //console.log(item.fileName);
+        //})
       });
   }
 

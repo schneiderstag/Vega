@@ -36,8 +36,12 @@ var ViewVehicleComponent = /** @class */ (function () {
     }
     ViewVehicleComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.photoService.getPhotos(this.vehicleId)
-            .subscribe(function (photos) { return _this.photos = photos; });
+        this.photoService.getVehiclePhotos(this.vehicleId)
+            //.subscribe(photos => this.photos = photos);
+            .subscribe(function (photos) {
+            _this.photos = photos;
+            console.log(photos);
+        });
         this.vehicleService.getVehicle(this.vehicleId)
             .subscribe(function (v) { return _this.vehicle = v; }, function (err) {
             if (err.status == 404) {
@@ -72,7 +76,7 @@ var ViewVehicleComponent = /** @class */ (function () {
             _this.photos.push(photo);
             console.log(photo);
         }, function (err) {
-            _this.notificationService.showToastr("error", "Error", "Photo upload failed: " + err.text());
+            _this.notificationService.showToastr("error", "Error", "Photo upload failed: " + err.error);
         });
     };
     __decorate([

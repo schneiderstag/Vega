@@ -35,17 +35,17 @@ namespace Vega.Controllers
         }
 
         [HttpGet("/api/photos")]
-        public async Task<IEnumerable<PhotoResource>> GetAllPhotos()
+        public async Task<IEnumerable<PhotoResource>> GetPhotos()
         {
-            var photos = await photoRepository.GetAllPhotos();
+            var photos = await photoRepository.GetPhotos();
 
             return mapper.Map<List<Photo>, List<PhotoResource>>(photos);
         }
 
         [HttpGet]
-        public async Task<IEnumerable<PhotoResource>> GetPhotos(int vehicleId)
+        public async Task<IEnumerable<PhotoResource>> GetVehiclePhotos(int vehicleId)
         {
-            var photos = await photoRepository.GetPhotos(vehicleId);
+            var photos = await photoRepository.GetVehiclePhotos(vehicleId);
 
             return mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos);
         }

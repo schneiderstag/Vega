@@ -27,6 +27,7 @@ var VehicleListComponent = /** @class */ (function () {
             { title: 'Contact Name', key: 'contactName', isSortable: true },
             { title: 'Make', key: 'make', isSortable: true },
             { title: 'Model', key: 'model', isSortable: true },
+            { title: 'Thumbnail', key: 'thumbnail', isSortable: false },
             {}
         ];
     }
@@ -36,6 +37,12 @@ var VehicleListComponent = /** @class */ (function () {
             .subscribe(function (makes) { return _this.makes = makes; }); // (makes: KeyValuePair[]) converts from Object to KeyValuePair
         this.vehicleService.getModels()
             .subscribe(function (models) { return _this.models = models; });
+        this.photoService.getPhotos()
+            .subscribe(function (photos) {
+            _this.photos = photos;
+            console.log("getPhotos() test");
+            console.log(_this.photos);
+        });
         //this.vehicleService.getVehicles(this.query)
         //  .subscribe((vehicles: Vehicle[]) => this.vehicles = this.allVehicles = vehicles);
         this.populateVehicles();
@@ -49,15 +56,38 @@ var VehicleListComponent = /** @class */ (function () {
         this.vehicleService.getVehicles(this.query)
             .subscribe(function (result) {
             _this.queryResult = result;
+            //this.queryResult.items.forEach(item => {
+            //  this.photoService.getVehiclePhotos(item.id)
+            //    .subscribe((p: any[]) => {
+            //      item.fileName = p.length > 0 ? p[0].fileName : '';
+            //      console.log(item.fileName);
+            //      console.log(this.queryResult);
+            //    });
+            //})
             _this.queryResult.items.forEach(function (item) {
-                _this.photoService.getPhotos(item.id)
-                    .subscribe(function (p) {
-                    //item.photo = p[0].fileName;
-                    item.fileName = p.length > 0 ? p[0].fileName : '';
-                    console.log(item.fileName);
-                    console.log(_this.queryResult);
-                });
+                for (var _i = 0, _a = _this.photos; _i < _a.length; _i++) {
+                    var photo = _a[_i];
+                    if (photo.vehicleId == item.id) {
+                        item.fileName = photo.fileName;
+                    }
+                    else
+                        '';
+                }
             });
+            console.log(_this.queryResult);
+            //this.queryResult.items.forEach(item => {
+            //  item.fileName = this.photos.length > 0 ? this.photos.filter(photo => { if (photo.vehicleId == item.id) return photo.fileName }) : '';
+            //})
+            //this.queryResult.items.forEach(item => {
+            //  item.fileName = this.photos.length > 0 ? this.photos.forEach(photo =>
+            //  {
+            //    this.photos.filter(photo => {
+            //      if (photo.vehicleId == item.id) return photo.fileName
+            //    })
+            //  }) : '';
+            //item.fileName = photos.length > 0 ? photos[0].fileName : '';
+            //console.log(item.fileName);
+            //})
         });
     };
     //populateVehicles() {

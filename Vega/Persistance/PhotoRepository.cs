@@ -16,13 +16,13 @@ namespace Vega.Persistance
             this.context = context;
         }
 
-        public async Task<List<Photo>> GetAllPhotos()
+        public async Task<List<Photo>> GetPhotos()
         {
             return await context.Photos
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Photo>> GetPhotos(int vehicleId)
+        public async Task<IEnumerable<Photo>> GetVehiclePhotos(int vehicleId)
         {
             return await context.Photos
                 .Where(p => p.VehicleId == vehicleId)

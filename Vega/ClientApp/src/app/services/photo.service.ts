@@ -14,11 +14,11 @@ export class PhotoService {
     return this.http.post(`/api/vehicles/${vehicleId}/photos`, formData);
   }
 
-  getPhotos(vehicleId) {
+  getVehiclePhotos(vehicleId) {
     return this.http.get(`/api/vehicles/${vehicleId}/photos`);
   }
 
-  getAllPhotos() {
+  getPhotos() {
     return this.http.get('/api/photos');
   }
 }
