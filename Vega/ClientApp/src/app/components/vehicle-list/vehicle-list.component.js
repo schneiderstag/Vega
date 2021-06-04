@@ -40,8 +40,7 @@ var VehicleListComponent = /** @class */ (function () {
         this.photoService.getPhotos()
             .subscribe(function (photos) {
             _this.photos = photos;
-            console.log("getPhotos() test");
-            console.log(_this.photos);
+            console.log("getPhotos() test", _this.photos);
         });
         //this.vehicleService.getVehicles(this.query)
         //  .subscribe((vehicles: Vehicle[]) => this.vehicles = this.allVehicles = vehicles);

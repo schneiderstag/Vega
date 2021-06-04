@@ -7,12 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
+var auth0_angular_1 = require("@auth0/auth0-angular");
+var animations_1 = require("@angular/platform-browser/animations");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/common/http");
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var animations_1 = require("@angular/platform-browser/animations");
 var ngx_toastr_1 = require("ngx-toastr");
 var app_component_1 = require("./components/app/app.component");
 var home_component_1 = require("./components/home/home.component");
@@ -38,10 +39,14 @@ var AppModule = /** @class */ (function () {
                 view_vehicle_component_1.ViewVehicleComponent
             ],
             imports: [
+                auth0_angular_1.AuthModule.forRoot({
+                    domain: 'vega-cars.eu.auth0.com',
+                    clientId: 'JRVpuq11X6HcK77MttV6868fS0DYUTt9'
+                }),
+                animations_1.BrowserAnimationsModule,
                 platform_browser_1.BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
                 forms_1.FormsModule,
                 http_1.HttpClientModule,
-                animations_1.BrowserAnimationsModule,
                 ngx_toastr_1.ToastrModule.forRoot({
                     timeOut: 5000,
                     positionClass: 'toast-bottom-right',

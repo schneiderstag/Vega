@@ -43,8 +43,7 @@ export class VehicleListComponent implements OnInit {
     this.photoService.getPhotos()
       .subscribe((photos: any[]) => {
         this.photos = photos;
-        console.log("getPhotos() test");
-        console.log(this.photos);
+        console.log("getPhotos() test", this.photos);
       });
 
     //this.vehicleService.getVehicles(this.query)

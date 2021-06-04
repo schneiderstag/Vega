@@ -1,9 +1,10 @@
+import { AuthModule } from '@auth0/auth0-angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './components/app/app.component';
@@ -28,10 +29,14 @@ import { AppErrorHandler } from './app.error-handler';
     ViewVehicleComponent
   ],
   imports: [
+    AuthModule.forRoot({
+      domain: 'vega-cars.eu.auth0.com',
+      clientId: 'JRVpuq11X6HcK77MttV6868fS0DYUTt9'
+    }),
+    BrowserAnimationsModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
