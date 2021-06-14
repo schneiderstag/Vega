@@ -18,7 +18,7 @@
       <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end" [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" (click)="auth.loginWithRedirect()" *ngIf="!auth.isAuthenticated$ | async">Log In</a>
+            <a class="nav-link text-dark" (click)="auth.loginWithRedirect()" *ngIf="(auth.isAuthenticated$ | async) === false">Log In</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" (click)="auth.logout({ returnTo: document.location.origin })" *ngIf="auth.isAuthenticated$ | async">Log Out</a>

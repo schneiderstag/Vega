@@ -13,7 +13,6 @@ exports.NavMenuComponent = void 0;
 var core_1 = require("@angular/core");
 var auth0_angular_1 = require("@auth0/auth0-angular");
 var NavMenuComponent = /** @class */ (function () {
-    //1234Abcd!
     function NavMenuComponent(auth) {
         this.auth = auth;
         this.isExpanded = false;

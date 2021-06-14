@@ -8,7 +8,7 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class NavMenuComponent {
   isExpanded = false;
-  //1234Abcd!
+
   constructor(private auth: AuthService) {}
 
   collapse() {
