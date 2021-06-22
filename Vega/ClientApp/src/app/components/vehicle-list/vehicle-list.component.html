@@ -41,7 +41,7 @@
       <td>{{ v.contact.name }}</td>
       <td>{{ v.make.name }}</td>
       <td>{{ v.model.name }}</td>
-      <td><img *ngIf="v.fileName!=''" src="/uploads/thumbnails/{{ v.fileName }}" class="img-thumbnail"></td>
+      <td><img *ngIf="v.fileName!=''" src="/uploads/thumbnails/{{ v.fileName }}"class="rounded-circle img-fluid profile-picture"></td>
       <td>
         <a [routerLink]="['/vehicles/', v.id]">View</a>
       </td>

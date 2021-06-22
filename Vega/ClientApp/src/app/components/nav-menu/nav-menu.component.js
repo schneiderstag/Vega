@@ -16,7 +16,18 @@ var NavMenuComponent = /** @class */ (function () {
     function NavMenuComponent(auth) {
         this.auth = auth;
         this.isExpanded = false;
+        this.profileJson = null;
     }
+    NavMenuComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        //gets the token
+        this.auth.user$.subscribe(
+        //(profile) => (this.profileJson = JSON.stringify(profile, null, 2))
+        function (profile) {
+            (_this.profileJson = JSON.stringify(profile, null, 2));
+            console.log("Token: ", _this.profileJson);
+        });
+    };
     NavMenuComponent.prototype.collapse = function () {
         this.isExpanded = false;
     };
