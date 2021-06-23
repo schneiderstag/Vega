@@ -24,7 +24,9 @@ var NavMenuComponent = /** @class */ (function () {
         this.auth.user$.subscribe(
         //(profile) => (this.profileJson = JSON.stringify(profile, null, 2))
         function (profile) {
-            (_this.profileJson = JSON.stringify(profile, null, 2));
+            (_this.profileJson = JSON.stringify(profile, null, 2)); //If needed, search how to get the token instead of the profile
+            //localStorage.setItem("profile", this.profileJson); //store token in the local storage
+            //localStorage.removeItem("profile"); //If you have a logout method, remove this from localStorage
             console.log("Token: ", _this.profileJson);
         });
     };

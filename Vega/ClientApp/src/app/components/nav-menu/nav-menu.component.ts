@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { profile } from 'console';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-nav-menu',
@@ -14,12 +14,17 @@ export class NavMenuComponent implements OnInit {
   constructor(private auth: AuthService) {}
 
   ngOnInit(): void {
-    //gets the token
+    //gets the profile
     this.auth.user$.subscribe(
       //(profile) => (this.profileJson = JSON.stringify(profile, null, 2))
       (profile) => {
-        (this.profileJson = JSON.stringify(profile, null, 2));
+        (this.profileJson = JSON.stringify(profile, null, 2)); //If needed, search how to get the token instead of the profile
+        //localStorage.setItem("profile", this.profileJson); //store token in the local storage
+        //localStorage.removeItem("profile"); //If you have a logout method, remove this from localStorage
         console.log("Token: ", this.profileJson);
+
+        var jwtHelper = new JwtHelperService();
+        var decodedToken = jwtHelper.decodeToken(myRawToken); //need to get the token here
       });
   }
 
