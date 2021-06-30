@@ -10,6 +10,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
   profileJson: string = null;
+  roles: any;
 
   constructor(private auth: AuthService) {}
 
@@ -23,9 +24,15 @@ export class NavMenuComponent implements OnInit {
         //localStorage.removeItem("profile"); //If you have a logout method, remove this from localStorage
         console.log("Token: ", this.profileJson);
 
-        var jwtHelper = new JwtHelperService();
-        var decodedToken = jwtHelper.decodeToken(myRawToken); //need to get the token here
+        //var jwtHelper = new JwtHelperService();
+        //var decodedToken = jwtHelper.decodeToken(this.profileJson); //need to get the token here
+        //console.log("Decoded Token: ", decodedToken)
       });
+
+    // gets the token, but not JWT yet.
+    this.auth.getAccessTokenSilently().subscribe(
+      token => console.log("getAccessTokenSilently() ", token)
+    );
   }
 
   collapse() {

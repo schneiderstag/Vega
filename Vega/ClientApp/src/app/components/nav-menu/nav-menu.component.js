@@ -20,7 +20,7 @@ var NavMenuComponent = /** @class */ (function () {
     }
     NavMenuComponent.prototype.ngOnInit = function () {
         var _this = this;
-        //gets the token
+        //gets the profile
         this.auth.user$.subscribe(
         //(profile) => (this.profileJson = JSON.stringify(profile, null, 2))
         function (profile) {
@@ -28,7 +28,12 @@ var NavMenuComponent = /** @class */ (function () {
             //localStorage.setItem("profile", this.profileJson); //store token in the local storage
             //localStorage.removeItem("profile"); //If you have a logout method, remove this from localStorage
             console.log("Token: ", _this.profileJson);
+            //var jwtHelper = new JwtHelperService();
+            //var decodedToken = jwtHelper.decodeToken(this.profileJson); //need to get the token here
+            //console.log("Decoded Token: ", decodedToken)
         });
+        // gets the token, but not JWT yet.
+        this.auth.getAccessTokenSilently().subscribe(function (token) { return console.log("getAccessTokenSilently() ", token); });
     };
     NavMenuComponent.prototype.collapse = function () {
         this.isExpanded = false;
