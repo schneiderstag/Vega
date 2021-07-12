@@ -12,28 +12,50 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NavMenuComponent = void 0;
 var core_1 = require("@angular/core");
 var auth0_angular_1 = require("@auth0/auth0-angular");
+var notification_service_1 = require("../../services/notification.service");
+//import { JwtHelperService } from '@auth0/angular-jwt';
 var NavMenuComponent = /** @class */ (function () {
-    function NavMenuComponent(auth) {
+    function NavMenuComponent(auth, notificationService) {
         this.auth = auth;
+        this.notificationService = notificationService;
         this.isExpanded = false;
-        this.profileJson = null;
     }
     NavMenuComponent.prototype.ngOnInit = function () {
         var _this = this;
-        //gets the profile
-        this.auth.user$.subscribe(
-        //(profile) => (this.profileJson = JSON.stringify(profile, null, 2))
-        function (profile) {
-            (_this.profileJson = JSON.stringify(profile, null, 2)); //If needed, search how to get the token instead of the profile
-            //localStorage.setItem("profile", this.profileJson); //store token in the local storage
-            //localStorage.removeItem("profile"); //If you have a logout method, remove this from localStorage
-            console.log("Token: ", _this.profileJson);
-            //var jwtHelper = new JwtHelperService();
-            //var decodedToken = jwtHelper.decodeToken(this.profileJson); //need to get the token here
-            //console.log("Decoded Token: ", decodedToken)
+        //gets the token
+        this.auth.idTokenClaims$.subscribe(function (claims) { return console.log("Token: ", claims); });
+        this.auth.error$.subscribe(function (error) {
+            console.log(error);
+            _this.notificationService.showToastr("success", "Success", "Token error: " + error);
         });
+        //gets the profile
+        //this.auth.user$.subscribe(
+        //(profile) => (this.profileJson = JSON.stringify(profile, null, 2))
+        //(profile) => {
+        //(this.profileJson = JSON.stringify(profile, null, 2)); //If needed, search how to get the token instead of the profile
+        ////localStorage.setItem("profile", this.profileJson); //store token in the local storage
+        ////localStorage.removeItem("profile"); //If you have a logout method, remove this from localStorage
+        //console.log("Token: ", this.profileJson);
+        //var jwtHelper = new JwtHelperService();
+        //var decodedToken = jwtHelper.decodeToken(this.profileJson); //need to get the token here
+        //console.log("Decoded Token: ", decodedToken)
+        //});
         // gets the token, but not JWT yet.
-        this.auth.getAccessTokenSilently().subscribe(function (token) { return console.log("getAccessTokenSilently() ", token); });
+        //this.auth.getAccessTokenSilently().subscribe(
+        //  token => console.log("getAccessTokenSilently() ", token)
+        //);
+        //Access the idTokenClaims$ observable on the AuthService instance to retrieve the ID token claims.
+        //Like the user$ observable, this observable already heeds the isAuthenticated$ observable, so you do not need to check if the user is authenticated before using it:
+        //this.auth.idTokenClaims$.subscribe((claims) => console.log("Token: ", claims));
+        //this.auth.idTokenClaims$.subscribe(
+        //  (claims) => {
+        //    console.log("claims", claims)
+        //var jwtHelper = new JwtHelperService();
+        //var decodedToken = jwtHelper.decodeToken(claims.__raw); //gets __raw value (JTW token) and decode it.
+        //console.log("jtw", decodedToken);
+        //});
+        //Errors in the login flow can be captured by subscribing to the error$ observable:
+        //this.auth.error$.subscribe((error) => console.log(error));
     };
     NavMenuComponent.prototype.collapse = function () {
         this.isExpanded = false;
@@ -47,7 +69,8 @@ var NavMenuComponent = /** @class */ (function () {
             templateUrl: './nav-menu.component.html',
             styleUrls: ['./nav-menu.component.css']
         }),
-        __metadata("design:paramtypes", [auth0_angular_1.AuthService])
+        __metadata("design:paramtypes", [auth0_angular_1.AuthService,
+            notification_service_1.NotificationService])
     ], NavMenuComponent);
     return NavMenuComponent;
 }());
