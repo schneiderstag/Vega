@@ -12,19 +12,38 @@ export class NavMenuComponent implements OnInit {
   isExpanded = false;
   //profileJson: string = null;
   roles: any;
+  isAuthenticated = false;
 
   constructor(
     private auth: AuthService,
     private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    //gets the token
-    this.auth.idTokenClaims$.subscribe((claims) => console.log("Token: ", claims));
+    //check if user is authenticated
+    this.auth.isAuthenticated$.subscribe(
+      (isAuthenticated) => {
+        console.log("is Authenticated: ", isAuthenticated);
+        this.isAuthenticated = isAuthenticated;
+      });
+
+    //gets the token if user is authenticated 
+    if (this.isAuthenticated) {
+      this.auth.idTokenClaims$.subscribe(
+        (claims) => {
+          console.log("Token: ", claims)
+          this.roles = claims["https://vega.com/roles"]; //gets the roles
+          console.log("Roles: ", this.roles);
+        });
+    }
+
     this.auth.error$.subscribe(
       (error) => {
         console.log(error);
-        this.notificationService.showToastr("success", "Success", "Token error: " + error);
+        this.notificationService.showToastr("error", "Error", "Token error: " + error);
       });
+
+    //gets the token
+    //this.auth.idTokenClaims$.subscribe((claims) => console.log("Token: ", claims));
 
     //gets the profile
     //this.auth.user$.subscribe(

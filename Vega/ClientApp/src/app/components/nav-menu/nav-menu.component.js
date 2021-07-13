@@ -19,15 +19,29 @@ var NavMenuComponent = /** @class */ (function () {
         this.auth = auth;
         this.notificationService = notificationService;
         this.isExpanded = false;
+        this.isAuthenticated = false;
     }
     NavMenuComponent.prototype.ngOnInit = function () {
         var _this = this;
-        //gets the token
-        this.auth.idTokenClaims$.subscribe(function (claims) { return console.log("Token: ", claims); });
+        //check if user is authenticated
+        this.auth.isAuthenticated$.subscribe(function (isAuthenticated) {
+            console.log("is Authenticated: ", isAuthenticated);
+            _this.isAuthenticated = isAuthenticated;
+        });
+        //gets the token if user is authenticated 
+        if (this.isAuthenticated) {
+            this.auth.idTokenClaims$.subscribe(function (claims) {
+                console.log("Token: ", claims);
+                _this.roles = claims["https://vega.com/roles"]; //gets the roles
+                console.log("Roles: ", _this.roles);
+            });
+        }
         this.auth.error$.subscribe(function (error) {
             console.log(error);
-            _this.notificationService.showToastr("success", "Success", "Token error: " + error);
+            _this.notificationService.showToastr("error", "Error", "Token error: " + error);
         });
+        //gets the token
+        //this.auth.idTokenClaims$.subscribe((claims) => console.log("Token: ", claims));
         //gets the profile
         //this.auth.user$.subscribe(
         //(profile) => (this.profileJson = JSON.stringify(profile, null, 2))
