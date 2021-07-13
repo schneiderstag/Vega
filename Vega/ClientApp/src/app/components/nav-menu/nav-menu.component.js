@@ -27,15 +27,15 @@ var NavMenuComponent = /** @class */ (function () {
         this.auth.isAuthenticated$.subscribe(function (isAuthenticated) {
             console.log("is Authenticated: ", isAuthenticated);
             _this.isAuthenticated = isAuthenticated;
+            //gets the token if user is authenticated
+            if (isAuthenticated) {
+                _this.auth.idTokenClaims$.subscribe(function (claims) {
+                    console.log("Token: ", claims);
+                    _this.roles = claims["https://vega.com/roles"]; //gets the roles
+                    console.log("Roles: ", _this.roles);
+                });
+            }
         });
-        //gets the token if user is authenticated 
-        if (this.isAuthenticated) {
-            this.auth.idTokenClaims$.subscribe(function (claims) {
-                console.log("Token: ", claims);
-                _this.roles = claims["https://vega.com/roles"]; //gets the roles
-                console.log("Roles: ", _this.roles);
-            });
-        }
         this.auth.error$.subscribe(function (error) {
             console.log(error);
             _this.notificationService.showToastr("error", "Error", "Token error: " + error);

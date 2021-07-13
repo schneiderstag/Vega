@@ -24,18 +24,18 @@ export class NavMenuComponent implements OnInit {
       (isAuthenticated) => {
         console.log("is Authenticated: ", isAuthenticated);
         this.isAuthenticated = isAuthenticated;
+
+        //gets the token if user is authenticated
+        if (isAuthenticated) { 
+        this.auth.idTokenClaims$.subscribe(
+          (claims) => {
+            console.log("Token: ", claims)
+            this.roles = claims["https://vega.com/roles"]; //gets the roles
+            console.log("Roles: ", this.roles);
+          });
+        }
       });
-
-    //gets the token if user is authenticated 
-    if (this.isAuthenticated) {
-      this.auth.idTokenClaims$.subscribe(
-        (claims) => {
-          console.log("Token: ", claims)
-          this.roles = claims["https://vega.com/roles"]; //gets the roles
-          console.log("Roles: ", this.roles);
-        });
-    }
-
+    
     this.auth.error$.subscribe(
       (error) => {
         console.log(error);
