@@ -11,7 +11,7 @@ import { NotificationService } from '../../services/notification.service';
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
   //profileJson: string = null;
-  roles: any;
+  private roles: string[] = [];
   isAuthenticated = false;
 
   constructor(
@@ -78,6 +78,10 @@ export class NavMenuComponent implements OnInit {
 
     //Errors in the login flow can be captured by subscribing to the error$ observable:
     //this.auth.error$.subscribe((error) => console.log(error));
+  }
+
+  public isInRole(roleName) {
+    return this.roles.indexOf(roleName) > -1;
   }
 
   collapse() {

@@ -19,6 +19,8 @@ var NavMenuComponent = /** @class */ (function () {
         this.auth = auth;
         this.notificationService = notificationService;
         this.isExpanded = false;
+        //profileJson: string = null;
+        this.roles = [];
         this.isAuthenticated = false;
     }
     NavMenuComponent.prototype.ngOnInit = function () {
@@ -70,6 +72,9 @@ var NavMenuComponent = /** @class */ (function () {
         //});
         //Errors in the login flow can be captured by subscribing to the error$ observable:
         //this.auth.error$.subscribe((error) => console.log(error));
+    };
+    NavMenuComponent.prototype.isInRole = function (roleName) {
+        return this.roles.indexOf(roleName) > -1;
     };
     NavMenuComponent.prototype.collapse = function () {
         this.isExpanded = false;

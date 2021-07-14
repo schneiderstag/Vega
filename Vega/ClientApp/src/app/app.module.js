@@ -15,6 +15,7 @@ var http_1 = require("@angular/common/http");
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var ngx_toastr_1 = require("ngx-toastr");
+var admin_component_1 = require("./components/admin/admin.component");
 var app_component_1 = require("./components/app/app.component");
 var home_component_1 = require("./components/home/home.component");
 var pagination_component_1 = require("./components/shared/pagination.component");
@@ -36,7 +37,8 @@ var AppModule = /** @class */ (function () {
                 pagination_component_1.PaginationComponent,
                 vehicle_form_component_1.VehicleFormComponent,
                 vehicle_list_component_1.VehicleListComponent,
-                view_vehicle_component_1.ViewVehicleComponent
+                view_vehicle_component_1.ViewVehicleComponent,
+                admin_component_1.AdminComponent
             ],
             imports: [
                 auth0_angular_1.AuthModule.forRoot({
@@ -58,6 +60,7 @@ var AppModule = /** @class */ (function () {
                     { path: 'vehicles/edit/:id', component: vehicle_form_component_1.VehicleFormComponent },
                     { path: 'vehicles/:id', component: view_vehicle_component_1.ViewVehicleComponent },
                     { path: 'vehicles', component: vehicle_list_component_1.VehicleListComponent },
+                    { path: 'admin', component: admin_component_1.AdminComponent },
                     { path: 'home', component: home_component_1.HomeComponent },
                     { path: '**', redirectTo: 'home' }
                 ])

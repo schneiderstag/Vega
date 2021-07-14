@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 
+import { AdminComponent } from './components/admin/admin.component';
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
 import { PaginationComponent } from './components/shared/pagination.component';
@@ -26,7 +27,8 @@ import { AppErrorHandler } from './app.error-handler';
     PaginationComponent,
     VehicleFormComponent,
     VehicleListComponent,
-    ViewVehicleComponent
+    ViewVehicleComponent,
+    AdminComponent
   ],
   imports: [
     AuthModule.forRoot({
@@ -48,6 +50,7 @@ import { AppErrorHandler } from './app.error-handler';
       { path: 'vehicles/edit/:id', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
+      { path: 'admin', component: AdminComponent },
       { path: 'home', component: HomeComponent},
       { path: '**', redirectTo: 'home' }
     ])
