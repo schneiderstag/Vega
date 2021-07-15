@@ -32,6 +32,9 @@
           <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isInRole('Admin')">
+            <a class="nav-link text-dark" [routerLink]="['/admin']">Admin</a>
+          </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="auth.idTokenClaims$ | async as user">
             <!--<a class="nav-link text-dark">{{ user.nickname }}</a>-->
             <a class="nav-link text-dark">{{ user.name }}</a>
@@ -41,9 +44,6 @@
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="auth.idTokenClaims$ | async as user">
             <img [src]="user.picture" alt="User's profile picture" class="rounded-circle img-fluid profile-picture" style="width:25%;" />
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isInRole('Admin')">
-            <a class="nav-link text-dark" [routerLink]="['/admin']">Admin</a>
           </li>
         </ul>
       </div>

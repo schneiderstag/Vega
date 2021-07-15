@@ -13,7 +13,7 @@ exports.NavMenuComponent = void 0;
 var core_1 = require("@angular/core");
 var auth0_angular_1 = require("@auth0/auth0-angular");
 var notification_service_1 = require("../../services/notification.service");
-//import { JwtHelperService } from '@auth0/angular-jwt';
+//import jwt_decode from 'jwt-decode';
 var NavMenuComponent = /** @class */ (function () {
     function NavMenuComponent(auth, notificationService) {
         this.auth = auth;
@@ -32,7 +32,6 @@ var NavMenuComponent = /** @class */ (function () {
             //gets the token if user is authenticated
             if (isAuthenticated) {
                 _this.auth.idTokenClaims$.subscribe(function (claims) {
-                    console.log("Token: ", claims);
                     _this.roles = claims["https://vega.com/roles"]; //gets the roles
                     console.log("Roles: ", _this.roles);
                 });
@@ -68,6 +67,7 @@ var NavMenuComponent = /** @class */ (function () {
         //    console.log("claims", claims)
         //var jwtHelper = new JwtHelperService();
         //var decodedToken = jwtHelper.decodeToken(claims.__raw); //gets __raw value (JTW token) and decode it.
+        //this.roles = decodedToken['https://vega.com/roles'];
         //console.log("jtw", decodedToken);
         //});
         //Errors in the login flow can be captured by subscribing to the error$ observable:

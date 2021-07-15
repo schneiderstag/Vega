@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { NotificationService } from '../../services/notification.service';
-//import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
+//import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-nav-menu',
@@ -13,6 +14,7 @@ export class NavMenuComponent implements OnInit {
   //profileJson: string = null;
   private roles: string[] = [];
   isAuthenticated = false;
+
 
   constructor(
     private auth: AuthService,
@@ -29,13 +31,12 @@ export class NavMenuComponent implements OnInit {
         if (isAuthenticated) { 
         this.auth.idTokenClaims$.subscribe(
           (claims) => {
-            console.log("Token: ", claims)
             this.roles = claims["https://vega.com/roles"]; //gets the roles
             console.log("Roles: ", this.roles);
           });
         }
       });
-    
+
     this.auth.error$.subscribe(
       (error) => {
         console.log(error);
@@ -73,6 +74,7 @@ export class NavMenuComponent implements OnInit {
     //    console.log("claims", claims)
         //var jwtHelper = new JwtHelperService();
         //var decodedToken = jwtHelper.decodeToken(claims.__raw); //gets __raw value (JTW token) and decode it.
+        //this.roles = decodedToken['https://vega.com/roles'];
         //console.log("jtw", decodedToken);
       //});
 
