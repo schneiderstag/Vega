@@ -26,7 +26,7 @@ export class NavMenuComponent implements OnInit {
 
   private readUserFromToken(): void {
     //checks if user is authenticated
-    this.auth.isAuthenticated$.subscribe(
+    this.auth.isAuthenticated$.subscribe( //you may be able to use this without subscribe to it.
       (isAuthenticated) => {
         console.log("Is Authenticated: ", isAuthenticated);
         this.isAuthenticated = isAuthenticated;
@@ -41,12 +41,12 @@ export class NavMenuComponent implements OnInit {
               console.log("Roles: ", this.roles);
             });
         }
-      });
 
-    this.auth.error$.subscribe(
-      (error) => {
-        console.log(error);
-        this.notificationService.showToastr("error", "Error", "Token error: " + error);
+        this.auth.error$.subscribe(
+          (error) => {
+            console.log(error);
+            this.notificationService.showToastr("error", "Error", "Token error: " + error);
+          });
       });
   }
 

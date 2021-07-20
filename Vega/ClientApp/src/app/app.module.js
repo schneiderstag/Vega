@@ -23,6 +23,7 @@ var nav_menu_component_1 = require("./components/nav-menu/nav-menu.component");
 var vehicle_form_component_1 = require("./components/vehicle-form/vehicle-form.component");
 var vehicle_list_component_1 = require("./components/vehicle-list/vehicle-list.component");
 var view_vehicle_component_1 = require("./components/view-vehicle/view-vehicle.component");
+//import { AuthGuardService } from './services/auth-guard.service';
 var core_2 = require("@angular/core");
 var app_error_handler_1 = require("./app.error-handler");
 var AppModule = /** @class */ (function () {
@@ -60,7 +61,7 @@ var AppModule = /** @class */ (function () {
                     { path: 'vehicles/edit/:id', component: vehicle_form_component_1.VehicleFormComponent },
                     { path: 'vehicles/:id', component: view_vehicle_component_1.ViewVehicleComponent },
                     { path: 'vehicles', component: vehicle_list_component_1.VehicleListComponent },
-                    { path: 'admin', component: admin_component_1.AdminComponent },
+                    { path: 'admin', component: admin_component_1.AdminComponent, canActivate: [auth0_angular_1.AuthGuard] },
                     { path: 'home', component: home_component_1.HomeComponent },
                     { path: '**', redirectTo: 'home' }
                 ])

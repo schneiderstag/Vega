@@ -29,7 +29,8 @@ var NavMenuComponent = /** @class */ (function () {
     NavMenuComponent.prototype.readUserFromToken = function () {
         var _this = this;
         //checks if user is authenticated
-        this.auth.isAuthenticated$.subscribe(function (isAuthenticated) {
+        this.auth.isAuthenticated$.subscribe(//you may be able to use this without subscribe to it.
+        function (isAuthenticated) {
             console.log("Is Authenticated: ", isAuthenticated);
             _this.isAuthenticated = isAuthenticated;
             //gets the token if user is authenticated
@@ -41,10 +42,10 @@ var NavMenuComponent = /** @class */ (function () {
                     console.log("Roles: ", _this.roles);
                 });
             }
-        });
-        this.auth.error$.subscribe(function (error) {
-            console.log(error);
-            _this.notificationService.showToastr("error", "Error", "Token error: " + error);
+            _this.auth.error$.subscribe(function (error) {
+                console.log(error);
+                _this.notificationService.showToastr("error", "Error", "Token error: " + error);
+            });
         });
     };
     NavMenuComponent.prototype.isInRole = function (roleName) {

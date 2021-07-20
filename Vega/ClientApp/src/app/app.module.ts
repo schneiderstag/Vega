@@ -1,4 +1,4 @@
-import { AuthModule } from '@auth0/auth0-angular';
+import { AuthGuard, AuthModule } from '@auth0/auth0-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,8 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import { ViewVehicleComponent } from './components/view-vehicle/view-vehicle.component';
+
+//import { AuthGuardService } from './services/auth-guard.service';
 
 import { ErrorHandler } from '@angular/core';
 import { AppErrorHandler } from './app.error-handler';
@@ -50,7 +52,7 @@ import { AppErrorHandler } from './app.error-handler';
       { path: 'vehicles/edit/:id', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
-      { path: 'admin', component: AdminComponent },
+      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] }, //[AuthGuardService]
       { path: 'home', component: HomeComponent},
       { path: '**', redirectTo: 'home' }
     ])
