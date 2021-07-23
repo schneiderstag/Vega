@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { AuthGuardService } from './auth-guard.service';
+import { AuthGuard } from './auth-guard.service';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminAuthGuardService extends AuthGuardService {
+export class AdminAuthGuard extends AuthGuard {
 
-  constructor(auth: AuthService) {
-    super(auth);
+  constructor(authentication: AuthenticationService) { //auth: AuthService, 
+    super(authentication);
   }
 
   canActivate(): boolean  {
     var isAuthenticated = super.canActivate();
 
-    return isAuthenticated ? this.auth.isInRole('Admin'): false;
+    return isAuthenticated ? this.authentication.isInRole('Admin'): false;
   }
 }

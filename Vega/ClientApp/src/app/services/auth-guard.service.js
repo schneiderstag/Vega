@@ -9,27 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthGuardService = void 0;
+exports.AuthGuard = void 0;
 var core_1 = require("@angular/core");
-var auth0_angular_1 = require("@auth0/auth0-angular");
-var AuthGuardService = /** @class */ (function () {
-    function AuthGuardService(auth) {
-        this.auth = auth;
+var authentication_service_1 = require("./authentication.service");
+var AuthGuard = /** @class */ (function () {
+    function AuthGuard(authentication) {
+        this.authentication = authentication;
         this.isAuthenticated = false;
-    }
-    AuthGuardService.prototype.canActivate = function () {
-        if (this.auth.isAuthenticated$)
+    } //protected auth: AuthService, 
+    AuthGuard.prototype.canActivate = function () {
+        if (this.authentication.isAuthenticated)
             return true;
         window.location.href = "vega-cars.eu.auth0.com/login";
         return false;
     };
-    AuthGuardService = __decorate([
+    AuthGuard = __decorate([
         core_1.Injectable({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [auth0_angular_1.AuthService])
-    ], AuthGuardService);
-    return AuthGuardService;
+        __metadata("design:paramtypes", [authentication_service_1.AuthenticationService])
+    ], AuthGuard);
+    return AuthGuard;
 }());
-exports.AuthGuardService = AuthGuardService;
+exports.AuthGuard = AuthGuard;
 //# sourceMappingURL=auth-guard.service.js.map

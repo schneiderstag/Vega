@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
-var auth0_angular_1 = require("@auth0/auth0-angular");
+var auth0_angular_1 = require("@auth0/auth0-angular"); //AuthGuard,
 var animations_1 = require("@angular/platform-browser/animations");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
@@ -23,7 +23,7 @@ var nav_menu_component_1 = require("./components/nav-menu/nav-menu.component");
 var vehicle_form_component_1 = require("./components/vehicle-form/vehicle-form.component");
 var vehicle_list_component_1 = require("./components/vehicle-list/vehicle-list.component");
 var view_vehicle_component_1 = require("./components/view-vehicle/view-vehicle.component");
-//import { AuthGuardService } from './services/auth-guard.service';
+var auth_guard_service_1 = require("./services/auth-guard.service");
 var core_2 = require("@angular/core");
 var app_error_handler_1 = require("./app.error-handler");
 var AppModule = /** @class */ (function () {
@@ -61,7 +61,7 @@ var AppModule = /** @class */ (function () {
                     { path: 'vehicles/edit/:id', component: vehicle_form_component_1.VehicleFormComponent },
                     { path: 'vehicles/:id', component: view_vehicle_component_1.ViewVehicleComponent },
                     { path: 'vehicles', component: vehicle_list_component_1.VehicleListComponent },
-                    { path: 'admin', component: admin_component_1.AdminComponent, canActivate: [auth0_angular_1.AuthGuard] },
+                    { path: 'admin', component: admin_component_1.AdminComponent, canActivate: [auth_guard_service_1.AuthGuard] },
                     { path: 'home', component: home_component_1.HomeComponent },
                     { path: '**', redirectTo: 'home' }
                 ])
