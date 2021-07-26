@@ -14,7 +14,7 @@ export class NavMenuComponent implements OnInit {
   isAuthenticated = false;
   private roles: string[] = [];
   private user: any;
-  //profileJson: string = null;
+  profileJson: string = null;
 
   constructor(
     private auth: AuthService,
@@ -37,8 +37,11 @@ export class NavMenuComponent implements OnInit {
             (claims) => {
               this.user = claims;
               this.roles = claims["https://vega.com/roles"]; //gets the roles
+              this.profileJson = JSON.stringify(claims, null, 2); //stores token in the local storage
+              localStorage.setItem("profile", this.profileJson);
               console.log("User: ", this.user);
               console.log("Roles: ", this.roles);
+              console.log("Profile Json: ", this.profileJson);
             });
         }
 
@@ -52,6 +55,11 @@ export class NavMenuComponent implements OnInit {
 
   public isInRole(roleName) {
     return this.roles.indexOf(roleName) > -1;
+  }
+
+  public logout() {
+    localStorage.removeItem("profile"); //remove profile from localStorage
+    this.auth.logout();
   }
 
   collapse() {

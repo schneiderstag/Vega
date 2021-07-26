@@ -15,13 +15,13 @@ var auth0_angular_1 = require("@auth0/auth0-angular");
 var notification_service_1 = require("../../services/notification.service");
 //import jwt_decode from 'jwt-decode';
 var NavMenuComponent = /** @class */ (function () {
-    //profileJson: string = null;
     function NavMenuComponent(auth, notificationService) {
         this.auth = auth;
         this.notificationService = notificationService;
         this.isExpanded = false;
         this.isAuthenticated = false;
         this.roles = [];
+        this.profileJson = null;
     }
     NavMenuComponent.prototype.ngOnInit = function () {
         this.readUserFromToken();
@@ -38,8 +38,11 @@ var NavMenuComponent = /** @class */ (function () {
                 _this.auth.idTokenClaims$.subscribe(function (claims) {
                     _this.user = claims;
                     _this.roles = claims["https://vega.com/roles"]; //gets the roles
+                    _this.profileJson = JSON.stringify(claims, null, 2); //stores token in the local storage
+                    localStorage.setItem("profile", _this.profileJson);
                     console.log("User: ", _this.user);
                     console.log("Roles: ", _this.roles);
+                    console.log("Profile Json: ", _this.profileJson);
                 });
             }
             _this.auth.error$.subscribe(function (error) {
@@ -50,6 +53,10 @@ var NavMenuComponent = /** @class */ (function () {
     };
     NavMenuComponent.prototype.isInRole = function (roleName) {
         return this.roles.indexOf(roleName) > -1;
+    };
+    NavMenuComponent.prototype.logout = function () {
+        localStorage.removeItem("profile"); //remove profile from localStorage
+        this.auth.logout();
     };
     NavMenuComponent.prototype.collapse = function () {
         this.isExpanded = false;

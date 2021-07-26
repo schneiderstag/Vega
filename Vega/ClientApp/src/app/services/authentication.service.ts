@@ -15,7 +15,7 @@ export class AuthenticationService implements OnInit {
   profileJson: string = null;
 
   ngOnInit(): void {
-    //this.readUserFromToken();
+    this.readUserFromToken();
   }
 
   constructor(
@@ -65,7 +65,6 @@ export class AuthenticationService implements OnInit {
 
   public loginWithRedirect() {
     this.auth.loginWithRedirect();
-    this.readUserFromToken();
   }
 
   public logout() {

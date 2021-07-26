@@ -21,7 +21,8 @@
             <a class="nav-link text-dark" (click)="auth.loginWithRedirect()" *ngIf="(auth.isAuthenticated$ | async) === false">Log In</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" (click)="auth.logout()" *ngIf="auth.isAuthenticated$ | async">Log Out</a>
+            <!--<a class="nav-link text-dark" (click)="auth.logout()" *ngIf="auth.isAuthenticated$ | async">Log Out</a>-->
+            <a class="nav-link text-dark" (click)="logout()" *ngIf="auth.isAuthenticated$ | async">Log Out</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link text-dark" [routerLink]="['/vehicles']">Vehicles</a>

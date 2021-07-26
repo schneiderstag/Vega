@@ -24,7 +24,7 @@ var AuthenticationService = /** @class */ (function () {
         this.profileJson = null;
     }
     AuthenticationService.prototype.ngOnInit = function () {
-        //this.readUserFromToken();
+        this.readUserFromToken();
     };
     AuthenticationService.prototype.readUserFromToken = function () {
         var _this = this;
@@ -61,7 +61,6 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.loginWithRedirect = function () {
         this.auth.loginWithRedirect();
-        this.readUserFromToken();
     };
     AuthenticationService.prototype.logout = function () {
         localStorage.removeItem("profile"); //remove profile from localStorage
