@@ -21,10 +21,10 @@ var AuthenticationService = /** @class */ (function () {
         this.notificationService = notificationService;
         this.authenticated = false;
         this.roles = [];
+        this.profileJson = null;
     }
-    //profileJson: string = null;
     AuthenticationService.prototype.ngOnInit = function () {
-        this.readUserFromToken();
+        //this.readUserFromToken();
     };
     AuthenticationService.prototype.readUserFromToken = function () {
         var _this = this;
@@ -37,8 +37,11 @@ var AuthenticationService = /** @class */ (function () {
                 _this.auth.idTokenClaims$.subscribe(function (claims) {
                     _this.user = claims;
                     _this.roles = claims["https://vega.com/roles"]; //get roles
+                    _this.profileJson = JSON.stringify(claims, null, 2); //stores token in the local storage
+                    localStorage.setItem("profile", _this.profileJson);
                     console.log("User: ", _this.user);
                     console.log("Roles: ", _this.roles);
+                    console.log("Roles: ", _this.profileJson);
                 });
             }
             _this.auth.error$.subscribe(function (error) {
@@ -58,8 +61,10 @@ var AuthenticationService = /** @class */ (function () {
     };
     AuthenticationService.prototype.loginWithRedirect = function () {
         this.auth.loginWithRedirect();
+        this.readUserFromToken();
     };
     AuthenticationService.prototype.logout = function () {
+        localStorage.removeItem("profile"); //remove profile from localStorage
         this.auth.logout();
     };
     AuthenticationService = __decorate([

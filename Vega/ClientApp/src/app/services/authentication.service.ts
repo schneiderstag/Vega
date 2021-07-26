@@ -12,10 +12,10 @@ export class AuthenticationService implements OnInit {
   private authenticated = false;
   private roles: string[] = [];
   private user: any;
-  //profileJson: string = null;
+  profileJson: string = null;
 
   ngOnInit(): void {
-    this.readUserFromToken();
+    //this.readUserFromToken();
   }
 
   constructor(
@@ -35,8 +35,11 @@ export class AuthenticationService implements OnInit {
             (claims) => {
               this.user = claims;
               this.roles = claims["https://vega.com/roles"]; //get roles
+              this.profileJson = JSON.stringify(claims, null, 2); //stores token in the local storage
+              localStorage.setItem("profile", this.profileJson);
               console.log("User: ", this.user);
               console.log("Roles: ", this.roles);
+              console.log("Roles: ", this.profileJson);
             });
         }
 
@@ -62,9 +65,11 @@ export class AuthenticationService implements OnInit {
 
   public loginWithRedirect() {
     this.auth.loginWithRedirect();
+    this.readUserFromToken();
   }
 
   public logout() {
+    localStorage.removeItem("profile"); //remove profile from localStorage
     this.auth.logout();
   }
 }
