@@ -26,22 +26,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminAuthGuard = void 0;
 var core_1 = require("@angular/core");
+var auth0_angular_1 = require("@auth0/auth0-angular");
 var auth_guard_service_1 = require("./auth-guard.service");
-var authentication_service_1 = require("./authentication.service");
 var AdminAuthGuard = /** @class */ (function (_super) {
     __extends(AdminAuthGuard, _super);
-    function AdminAuthGuard(authentication) {
-        return _super.call(this, authentication) || this;
+    function AdminAuthGuard(auth) {
+        return _super.call(this, auth) || this;
     }
     AdminAuthGuard.prototype.canActivate = function () {
         var isAuthenticated = _super.prototype.canActivate.call(this);
-        return isAuthenticated ? this.authentication.isInRole('Admin') : false;
+        //Reads and parses the localStorage data into an object
+        var profile = JSON.parse(localStorage.getItem("profile"));
+        //Gets the roles from the profile object
+        var roles = profile['https://vega.com/roles'];
+        return isAuthenticated ? roles.includes("Admin") : false;
     };
     AdminAuthGuard = __decorate([
         core_1.Injectable({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [authentication_service_1.AuthenticationService])
+        __metadata("design:paramtypes", [auth0_angular_1.AuthService])
     ], AdminAuthGuard);
     return AdminAuthGuard;
 }(auth_guard_service_1.AuthGuard));
