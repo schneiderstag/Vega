@@ -25,23 +25,23 @@ export class NavMenuComponent implements OnInit {
   }
 
   private readUserFromToken(): void {
-    //checks if user is authenticated
-    this.auth.isAuthenticated$.subscribe( //you may be able to use this without subscribe to it.
+    //check if user is authenticated
+    this.auth.isAuthenticated$.subscribe(
       (isAuthenticated) => {
         console.log("Is Authenticated: ", isAuthenticated);
         this.isAuthenticated = isAuthenticated;
 
-        //gets the token if user is authenticated
+        //get the token if user is authenticated
         if (isAuthenticated) {
           this.auth.idTokenClaims$.subscribe(
             (claims) => {
-              this.user = claims;
-              this.roles = claims["https://vega.com/roles"]; //gets the roles
-              this.profileJson = JSON.stringify(claims, null, 2); //stores token in the local storage
+              //this.user = claims;
+              //this.roles = claims["https://vega.com/roles"]; //get the roles
+              this.profileJson = JSON.stringify(claims, null, 2); //store token in the local storage
               localStorage.setItem("profile", this.profileJson);
-              console.log("User: ", this.user);
-              console.log("Roles: ", this.roles);
-              console.log("Profile Json: ", this.profileJson);
+              //console.log("User: ", this.user);
+              //console.log("Roles: ", this.roles);
+              //console.log("Profile Json: ", this.profileJson);
             });
         }
 

@@ -20,6 +20,7 @@ var AuthGuard = /** @class */ (function () {
     AuthGuard.prototype.canActivate = function () {
         if (localStorage.getItem("profile"))
             return true;
+        window.location.href = "vega-cars.eu.auth0.com/login";
         return false;
     };
     AuthGuard = __decorate([

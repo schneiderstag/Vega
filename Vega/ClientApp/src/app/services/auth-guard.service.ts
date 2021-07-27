@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +14,7 @@ export class AuthGuard implements CanActivate {
     if (localStorage.getItem("profile"))
       return true;
 
+    window.location.href = "vega-cars.eu.auth0.com/login";
     return false;
   }
 

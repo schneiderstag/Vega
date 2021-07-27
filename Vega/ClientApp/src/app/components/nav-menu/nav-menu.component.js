@@ -28,21 +28,20 @@ var NavMenuComponent = /** @class */ (function () {
     };
     NavMenuComponent.prototype.readUserFromToken = function () {
         var _this = this;
-        //checks if user is authenticated
-        this.auth.isAuthenticated$.subscribe(//you may be able to use this without subscribe to it.
-        function (isAuthenticated) {
+        //check if user is authenticated
+        this.auth.isAuthenticated$.subscribe(function (isAuthenticated) {
             console.log("Is Authenticated: ", isAuthenticated);
             _this.isAuthenticated = isAuthenticated;
-            //gets the token if user is authenticated
+            //get the token if user is authenticated
             if (isAuthenticated) {
                 _this.auth.idTokenClaims$.subscribe(function (claims) {
-                    _this.user = claims;
-                    _this.roles = claims["https://vega.com/roles"]; //gets the roles
-                    _this.profileJson = JSON.stringify(claims, null, 2); //stores token in the local storage
+                    //this.user = claims;
+                    //this.roles = claims["https://vega.com/roles"]; //get the roles
+                    _this.profileJson = JSON.stringify(claims, null, 2); //store token in the local storage
                     localStorage.setItem("profile", _this.profileJson);
-                    console.log("User: ", _this.user);
-                    console.log("Roles: ", _this.roles);
-                    console.log("Profile Json: ", _this.profileJson);
+                    //console.log("User: ", this.user);
+                    //console.log("Roles: ", this.roles);
+                    //console.log("Profile Json: ", this.profileJson);
                 });
             }
             _this.auth.error$.subscribe(function (error) {
