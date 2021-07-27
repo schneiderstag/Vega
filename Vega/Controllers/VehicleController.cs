@@ -23,6 +23,7 @@ namespace Vega.Controllers
             this.repository = repository;
             this.unitOfWork = unitOfWork;
         }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreateVehicle([FromBody] SaveVehicleResource vehicleResource)
@@ -46,7 +47,7 @@ namespace Vega.Controllers
         [HttpPut("{id}")] // /api/vehicles/{id}
         [Authorize]
         public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleResource vehicleResource)
-        {
+        { 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

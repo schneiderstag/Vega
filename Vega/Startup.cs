@@ -11,6 +11,7 @@ using Vega.Mapping;
 using Vega.Core;
 using Vega.Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Vega.Controllers;
 
 namespace Vega
 {
@@ -70,6 +71,13 @@ namespace Vega
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
+            // Add policies for authorizations
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.RequireAdminRole, policy => policy.RequireClaim("https://vega.com/roles", "Admin"));
+            });
+
+            // Add framework services
             services.AddMvc();
         }
 
