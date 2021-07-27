@@ -6,12 +6,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.AppModule = exports.tokenGetter = void 0;
 var auth0_angular_1 = require("@auth0/auth0-angular");
 var animations_1 = require("@angular/platform-browser/animations");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/common/http");
+var angular_jwt_1 = require("@auth0/angular-jwt");
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var ngx_toastr_1 = require("ngx-toastr");
@@ -26,6 +27,10 @@ var view_vehicle_component_1 = require("./components/view-vehicle/view-vehicle.c
 var admin_auth_guard_service_1 = require("./services/admin-auth-guard.service");
 var core_2 = require("@angular/core");
 var app_error_handler_1 = require("./app.error-handler");
+function tokenGetter() {
+    return localStorage.getItem("access_token");
+}
+exports.tokenGetter = tokenGetter;
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -50,6 +55,13 @@ var AppModule = /** @class */ (function () {
                 platform_browser_1.BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
                 forms_1.FormsModule,
                 http_1.HttpClientModule,
+                angular_jwt_1.JwtModule.forRoot({
+                    config: {
+                        tokenGetter: tokenGetter,
+                        allowedDomains: ["example.com"],
+                        disallowedRoutes: ["http://example.com/examplebadroute/"],
+                    },
+                }),
                 ngx_toastr_1.ToastrModule.forRoot({
                     timeOut: 5000,
                     positionClass: 'toast-bottom-right',

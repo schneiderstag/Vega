@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from "@auth0/angular-jwt";
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
@@ -21,6 +22,10 @@ import { AdminAuthGuard } from './services/admin-auth-guard.service';
 
 import { ErrorHandler } from '@angular/core';
 import { AppErrorHandler } from './app.error-handler';
+
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
+}
 
 @NgModule({
   declarations: [
@@ -42,6 +47,13 @@ import { AppErrorHandler } from './app.error-handler';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     FormsModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["example.com"],//["vega-cars.eu.auth0.com", "localhost:44345"],
+        disallowedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',

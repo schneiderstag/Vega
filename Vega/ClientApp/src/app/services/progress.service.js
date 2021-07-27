@@ -20,10 +20,12 @@ var ProgressService = /** @class */ (function () {
         return this.uploadProgress;
     };
     ProgressService.prototype.notify = function (progress) {
-        this.uploadProgress.next(progress);
+        if (this.uploadProgress)
+            this.uploadProgress.next(progress);
     };
     ProgressService.prototype.endTracking = function () {
-        this.uploadProgress.complete();
+        if (this.uploadProgress)
+            this.uploadProgress.complete();
     };
     ProgressService = __decorate([
         core_1.Injectable({

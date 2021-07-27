@@ -7,6 +7,7 @@ import { SaveVehicle } from '../models/vehicle';
 })
 export class VehicleService {
   private readonly vehiclesEndpoint = '/api/vehicles';
+
   constructor(private http: HttpClient) { }
 
   // By default the HttpClient deserializes the content of a response into an object.
