@@ -24,6 +24,7 @@ var nav_menu_component_1 = require("./components/nav-menu/nav-menu.component");
 var vehicle_form_component_1 = require("./components/vehicle-form/vehicle-form.component");
 var vehicle_list_component_1 = require("./components/vehicle-list/vehicle-list.component");
 var view_vehicle_component_1 = require("./components/view-vehicle/view-vehicle.component");
+var auth_guard_service_1 = require("./services/auth-guard.service");
 var admin_auth_guard_service_1 = require("./services/admin-auth-guard.service");
 var core_2 = require("@angular/core");
 var app_error_handler_1 = require("./app.error-handler");
@@ -69,8 +70,8 @@ var AppModule = /** @class */ (function () {
                 }),
                 router_1.RouterModule.forRoot([
                     { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
-                    { path: 'vehicles/new', component: vehicle_form_component_1.VehicleFormComponent },
-                    { path: 'vehicles/edit/:id', component: vehicle_form_component_1.VehicleFormComponent },
+                    { path: 'vehicles/new', component: vehicle_form_component_1.VehicleFormComponent, canActivate: [auth_guard_service_1.AuthGuard] },
+                    { path: 'vehicles/edit/:id', component: vehicle_form_component_1.VehicleFormComponent, canActivate: [auth_guard_service_1.AuthGuard] },
                     { path: 'vehicles/:id', component: view_vehicle_component_1.ViewVehicleComponent },
                     { path: 'vehicles', component: vehicle_list_component_1.VehicleListComponent },
                     { path: 'admin', component: admin_component_1.AdminComponent, canActivate: [admin_auth_guard_service_1.AdminAuthGuard] },

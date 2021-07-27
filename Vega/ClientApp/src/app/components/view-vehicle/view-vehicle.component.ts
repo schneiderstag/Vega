@@ -4,6 +4,7 @@ import { NotificationService } from '../../services/notification.service';
 import { VehicleService } from '../../services/vehicle.service';
 import { PhotoService } from '../../services/photo.service';
 import { ProgressService } from '../../services/progress.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'view-vehicle',
@@ -24,7 +25,8 @@ export class ViewVehicleComponent implements OnInit {
     private notificationService: NotificationService,
     private progressService: ProgressService,
     private photoService: PhotoService,
-    private vehicleService: VehicleService) {
+    private vehicleService: VehicleService,
+    private auth: AuthService  ) {
 
     route.params.subscribe(p => {
       this.vehicleId = +p['id'];

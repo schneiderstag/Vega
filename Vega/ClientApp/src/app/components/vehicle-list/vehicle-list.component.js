@@ -11,12 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VehicleListComponent = void 0;
 var core_1 = require("@angular/core");
-var vehicle_service_1 = require("../../services/vehicle.service");
+var auth0_angular_1 = require("@auth0/auth0-angular");
 var photo_service_1 = require("../../services/photo.service");
+var vehicle_service_1 = require("../../services/vehicle.service");
 var VehicleListComponent = /** @class */ (function () {
-    function VehicleListComponent(vehicleService, photoService) {
+    function VehicleListComponent(vehicleService, photoService, auth) {
         this.vehicleService = vehicleService;
         this.photoService = photoService;
+        this.auth = auth;
         this.PAGE_SIZE = 10;
         this.queryResult = {};
         this.query = {
@@ -139,7 +141,8 @@ var VehicleListComponent = /** @class */ (function () {
             styleUrls: ['./vehicle-list.component.css']
         }),
         __metadata("design:paramtypes", [vehicle_service_1.VehicleService,
-            photo_service_1.PhotoService])
+            photo_service_1.PhotoService,
+            auth0_angular_1.AuthService])
     ], VehicleListComponent);
     return VehicleListComponent;
 }());

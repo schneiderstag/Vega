@@ -16,8 +16,9 @@ var notification_service_1 = require("../../services/notification.service");
 var vehicle_service_1 = require("../../services/vehicle.service");
 var photo_service_1 = require("../../services/photo.service");
 var progress_service_1 = require("../../services/progress.service");
+var auth0_angular_1 = require("@auth0/auth0-angular");
 var ViewVehicleComponent = /** @class */ (function () {
-    function ViewVehicleComponent(zone, route, router, notificationService, progressService, photoService, vehicleService) {
+    function ViewVehicleComponent(zone, route, router, notificationService, progressService, photoService, vehicleService, auth) {
         var _this = this;
         this.zone = zone;
         this.route = route;
@@ -26,6 +27,7 @@ var ViewVehicleComponent = /** @class */ (function () {
         this.progressService = progressService;
         this.photoService = photoService;
         this.vehicleService = vehicleService;
+        this.auth = auth;
         route.params.subscribe(function (p) {
             _this.vehicleId = +p['id'];
             if (isNaN(_this.vehicleId) || _this.vehicleId <= 0) {
@@ -95,7 +97,8 @@ var ViewVehicleComponent = /** @class */ (function () {
             notification_service_1.NotificationService,
             progress_service_1.ProgressService,
             photo_service_1.PhotoService,
-            vehicle_service_1.VehicleService])
+            vehicle_service_1.VehicleService,
+            auth0_angular_1.AuthService])
     ], ViewVehicleComponent);
     return ViewVehicleComponent;
 }());

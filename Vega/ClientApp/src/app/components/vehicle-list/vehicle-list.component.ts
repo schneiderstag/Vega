@@ -1,8 +1,8 @@
 import { Component, KeyValueDiffers, OnInit } from '@angular/core';
 import { KeyValuePair, Vehicle } from '../../models/vehicle';
-import { VehicleService } from '../../services/vehicle.service';
-
+import { AuthService } from '@auth0/auth0-angular';
 import { PhotoService } from '../../services/photo.service';
+import { VehicleService } from '../../services/vehicle.service';
 
 @Component({
   selector: 'vehicle-list',
@@ -29,9 +29,10 @@ export class VehicleListComponent implements OnInit {
     { }
   ];
 
-  constructor(private vehicleService: VehicleService,
-              private photoService: PhotoService
-              ) { }
+  constructor(
+    private vehicleService: VehicleService,
+    private photoService: PhotoService,
+    private auth: AuthService) { }
 
   ngOnInit(): void {
     this.vehicleService.getMakes()
