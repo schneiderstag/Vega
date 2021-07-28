@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using Vega.Controllers.Resources;
@@ -20,17 +18,22 @@ namespace Vega.Controllers
         private readonly IWebHostEnvironment host;
         private readonly IVehicleRepository repository;
         private readonly IPhotoRepository photoRepository;
-        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IPhotoService photoService;
         private readonly PhotoSettings photoSettings;
 
-        public PhotoController(IWebHostEnvironment host, IVehicleRepository repository, IPhotoRepository photoRepository, IUnitOfWork unitOfWork, IMapper mapper, IOptionsSnapshot<PhotoSettings> options)
+        public PhotoController(IWebHostEnvironment host,
+                               IVehicleRepository repository,
+                               IPhotoRepository photoRepository,
+                               IMapper mapper,
+                               IPhotoService photoService,
+                               IOptionsSnapshot<PhotoSettings> options)
         {
             this.host = host;
             this.repository = repository;
             this.photoRepository = photoRepository;
-            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.photoService = photoService;
             this.photoSettings = options.Value; // Values coming from Statup.cs -> appsettings.json
         }
 
@@ -38,7 +41,6 @@ namespace Vega.Controllers
         public async Task<IEnumerable<PhotoResource>> GetPhotos()
         {
             var photos = await photoRepository.GetPhotos();
-
             return mapper.Map<List<Photo>, List<PhotoResource>>(photos);
         }
 
@@ -46,7 +48,6 @@ namespace Vega.Controllers
         public async Task<IEnumerable<PhotoResource>> GetVehiclePhotos(int vehicleId)
         {
             var photos = await photoRepository.GetVehiclePhotos(vehicleId);
-
             return mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos);
         }
 
@@ -64,48 +65,9 @@ namespace Vega.Controllers
 
             var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads"); // wwwroot folder
             var uploadsThumbnailFolderPath = Path.Combine(host.WebRootPath, "uploads\\thumbnails"); // wwwroot folder
-
-            if (!Directory.Exists(uploadsFolderPath))
-                Directory.CreateDirectory(uploadsFolderPath);
-
-            if (!Directory.Exists(uploadsThumbnailFolderPath))
-                Directory.CreateDirectory(uploadsThumbnailFolderPath);
-
-            // Always generate a file name to avoid hackers modifying the file/path name on the fly, accessing directories such as C:/Windows
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-            var filePath = Path.Combine(uploadsFolderPath, fileName);
-            var thumbnailPath = Path.Combine(uploadsThumbnailFolderPath, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            // Create thumbnail and save it to the folder.
-            CreateThumbnail(file, thumbnailPath);
-            
-            var photo = new Photo { FileName = fileName };
-            vehicle.Photos.Add(photo);
-            await unitOfWork.CompleteAsync();
+            var photo = await photoService.UploadPhoto(vehicle, file, uploadsFolderPath, uploadsThumbnailFolderPath);
 
             return Ok(mapper.Map<Photo, PhotoResource>(photo));
-        }
-
-        private void CreateThumbnail(IFormFile file, string path, int width = 32, int height = 32)
-        {
-            try
-            {
-                Stream resourceImage = file.OpenReadStream();
-                Image image = Image.FromStream(resourceImage);
-                Image thumb = image.GetThumbnailImage(width, height, () => false, IntPtr.Zero);
-
-                thumb.Save(path);
-            }
-            catch (Exception e)
-            {
-                var exception = new Exception("Could not generate thumbnail: " + e.ToString());
-                throw exception;
-            }
         }
     }
 }
