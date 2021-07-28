@@ -36,7 +36,7 @@ export class NavMenuComponent implements OnInit {
           this.auth.idTokenClaims$.subscribe(
             (claims) => {
               //this.user = claims;
-              this.roles = claims["https://vega.com/roles"]; //get the roles
+              this.roles = claims["https://vega.com/roles"] || []; //get the roles
               this.profileJson = JSON.stringify(claims, null, 2); //store token in the local storage
               localStorage.setItem("profile", this.profileJson);
               //console.log("User: ", this.user);

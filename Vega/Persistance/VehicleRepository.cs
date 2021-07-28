@@ -48,14 +48,9 @@ namespace Vega.Persistance
             var query = context.Vehicles
                 .Include(v => v.Model)
                     .ThenInclude(m => m.Make)
-                .Include(v => v.Features)
-                    .ThenInclude(vf => vf.Feature)
                 .AsQueryable();
 
-            if (queryObject.MakeId.HasValue)
-                query = query.Where(v => v.Model.MakeId == queryObject.MakeId.Value);
-            if (queryObject.ModelId.HasValue)
-                query = query.Where(v => v.ModelId == queryObject.ModelId.Value);
+            query = query.ApplyFiltering(queryObject);
 
             //Expression tree (dictionary) to map the sorting columns to the linq expressions
             var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>() // object because we can then reference any property of the vehicle and not only string properties.
@@ -65,7 +60,6 @@ namespace Vega.Persistance
                 ["contactName"] = v => v.ContactName,
                 //["id"] = v => v.Id
             };
-
             query = query.ApplyOrdering(queryObject, columnsMap);
 
             result.TotalItems = await query.CountAsync();

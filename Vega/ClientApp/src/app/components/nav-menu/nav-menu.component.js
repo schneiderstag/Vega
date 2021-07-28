@@ -36,7 +36,7 @@ var NavMenuComponent = /** @class */ (function () {
             if (isAuthenticated) {
                 _this.auth.idTokenClaims$.subscribe(function (claims) {
                     //this.user = claims;
-                    _this.roles = claims["https://vega.com/roles"]; //get the roles
+                    _this.roles = claims["https://vega.com/roles"] || []; //get the roles
                     _this.profileJson = JSON.stringify(claims, null, 2); //store token in the local storage
                     localStorage.setItem("profile", _this.profileJson);
                     //console.log("User: ", this.user);
