@@ -17,6 +17,8 @@ namespace Vega
 {
     public class Startup
     {
+        private string _connectionString = null;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -59,10 +61,15 @@ namespace Vega
             services.AddTransient<IPhotoStorage, FileSystemPhotoStorage>();
 
             // Configure DbContext as a service for Dependency Injection:
+            
             // Get the connection string from appsettings.json:
-            services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            //services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             // or
-            // services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
+            //// services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
+
+            //Get the connection string from user secrets:
+            //_connectionString = Configuration["ConnectionStrings:Default"];
+            services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(_connectionString));
 
             // AutoMapper Configurations
             var mapperConfig = new MapperConfiguration(mc =>
@@ -86,6 +93,12 @@ namespace Vega
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //Get the connection string from user secrets only if it's a DEV environment:
+            if (env.IsDevelopment())
+            {
+                _connectionString = Configuration["ConnectionStrings:Default"];
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
