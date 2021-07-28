@@ -13,6 +13,19 @@ exports.AdminComponent = void 0;
 var core_1 = require("@angular/core");
 var AdminComponent = /** @class */ (function () {
     function AdminComponent() {
+        this.data = {
+            labels: ['BMW', 'Audi', 'Mazda'],
+            datasets: [
+                {
+                    data: [5, 3, 1],
+                    backgroundColor: [
+                        "#ff6384",
+                        "#36a2eb",
+                        "#ffce56"
+                    ]
+                }
+            ],
+        };
     }
     AdminComponent.prototype.ngOnInit = function () {
     };

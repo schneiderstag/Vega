@@ -1,6 +1,7 @@
 import { AuthModule } from '@auth0/auth0-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { ChartModule } from 'angular2-chartjs';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from "@auth0/angular-jwt";
@@ -47,6 +48,7 @@ export function tokenGetter() {
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     FormsModule,
     HttpClientModule,
+    ChartModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

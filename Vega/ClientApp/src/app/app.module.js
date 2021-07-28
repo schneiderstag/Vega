@@ -10,6 +10,7 @@ exports.AppModule = exports.tokenGetter = void 0;
 var auth0_angular_1 = require("@auth0/auth0-angular");
 var animations_1 = require("@angular/platform-browser/animations");
 var platform_browser_1 = require("@angular/platform-browser");
+var angular2_chartjs_1 = require("angular2-chartjs");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/common/http");
 var angular_jwt_1 = require("@auth0/angular-jwt");
@@ -56,6 +57,7 @@ var AppModule = /** @class */ (function () {
                 platform_browser_1.BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
                 forms_1.FormsModule,
                 http_1.HttpClientModule,
+                angular2_chartjs_1.ChartModule,
                 angular_jwt_1.JwtModule.forRoot({
                     config: {
                         tokenGetter: tokenGetter,
